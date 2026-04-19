@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Grid Slicer</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --panel: #ffffff;
+      --line: #d7dfeb;
+      --text: #152033;
+      --muted: #5d6b82;
+      --brand: #2563eb;
+      --brand-dark: #1d4ed8;
+      --ok: #0f9d58;
+      --warn: #b45309;
+      --shadow: 0 14px 34px rgba(21, 32, 51, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      background: linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    .app {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 32px;
+      line-height: 1.15;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 900px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid #e9eef6;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 18px 20px 8px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .panel-body {
+      padding: 20px;
+    }
+
+    .controls {
+      display: grid;
+      gap: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    input[type="file"],
+    input[type="number"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      font-size: 15px;
+      background: #fff;
+      color: var(--text);
+    }
+
+    .row-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .08s ease, opacity .2s ease, background .2s ease;
+    }
+
+    button:hover { transform: translateY(-1px); }
+    button:disabled { cursor: not-allowed; opacity: 0.55; transform: none; }
+
+    .btn-primary {
+      background: var(--brand);
+      color: white;
+    }
+
+    .btn-primary:hover { background: var(--brand-dark); }
+
+    .btn-secondary {
+      background: #e8eefc;
+      color: #1d3f91;
+    }
+
+    .btn-light {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .status {
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      line-height: 1.6;
+      background: #eef4ff;
+      color: #26438f;
+      border: 1px solid #d7e4ff;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .stat {
+      background: #f8fafc;
+      border: 1px solid #e5ebf3;
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .preview-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .preview-meta {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .empty {
+      padding: 36px 20px;
+      border: 2px dashed #d9e3f0;
+      border-radius: 16px;
+      text-align: center;
+      color: var(--muted);
+      background: #fbfdff;
+    }
+
+    .source-wrap {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .source-canvas-wrap {
+      overflow: auto;
+      border: 1px solid #e5ebf3;
+      border-radius: 14px;
+      background: white;
+      padding: 12px;
+    }
+
+    #sourceCanvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      background-image:
+        linear-gradient(45deg, #f1f5f9 25%, transparent 25%),
+        linear-gradient(-45deg, #f1f5f9 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f1f5f9 75%),
+        linear-gradient(-45deg, transparent 75%, #f1f5f9 75%);
+      background-size: 20px 20px;
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    }
+
+    .grid-preview {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 14px;
+    }
+
+    .tile {
+      border: 1px solid #e4eaf2;
+      border-radius: 16px;
+      background: white;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+    }
+
+    .tile img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      background-image:
+        linear-gradient(45deg, #f1f5f9 25%, transparent 25%),
+        linear-gradient(-45deg, #f1f5f9 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f1f5f9 75%),
+        linear-gradient(-45deg, transparent 75%, #f1f5f9 75%);
+      background-size: 20px 20px;
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    }
+
+    .tile-body {
+      padding: 10px 12px 12px;
+    }
+
+    .tile-name {
+      font-size: 13px;
+      font-weight: 700;
+      word-break: break-word;
+      margin-bottom: 4px;
+    }
+
+    .tile-meta {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .steps {
+      margin-top: 24px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .step {
+      padding: 16px 18px;
+      border: 1px solid #e7edf5;
+      background: #fff;
+      border-radius: 14px;
+    }
+
+    .step h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .step p,
+    .step li {
+      color: #334155;
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .step ol,
+    .step ul {
+      margin: 8px 0 0 20px;
+      padding: 0;
+    }
+
+    code {
+      background: #eff4fb;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-family: Consolas, monospace;
+      font-size: 13px;
+    }
+
+    @media (max-width: 960px) {
+      .layout { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .app { padding: 16px; }
+      h1 { font-size: 26px; }
+      .row-two, .stats { grid-template-columns: 1fr; }
+      .preview-head { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <section class="hero">
+      <h1>Image Grid Slicer</h1>
+      <p class="subtitle">Upload a JPG, PNG, or GIF, choose rows and columns from 2 to 6, slice the image into even parts, preview every output tile, and download all pieces as a ZIP file. This file is ready for GitHub Pages.</p>
+    </section>
+
+    <div class="layout">
+      <section class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Controls</h2>
+        </div>
+        <div class="panel-body">
+          <div class="controls">
+            <div class="field">
+              <label for="fileInput">1. Upload image</label>
+              <input id="fileInput" type="file" accept=".jpg,.jpeg,.png,.gif,image/jpeg,image/png,image/gif" />
+              <div class="hint">Supported types: JPG, PNG, GIF. Animated GIF files are accepted, but slicing is based on the current rendered image frame in the browser.</div>
+            </div>
+
+            <div class="row-two">
+              <div class="field">
+                <label for="columnsInput">2. Number of columns</label>
+                <input id="columnsInput" type="number" min="2" max="6" step="1" value="4" />
+              </div>
+              <div class="field">
+                <label for="rowsInput">3. Number of rows</label>
+                <input id="rowsInput" type="number" min="2" max="6" step="1" value="4" />
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button id="sliceBtn" class="btn-primary">Slice image</button>
+              <button id="downloadBtn" class="btn-secondary" disabled>Download ZIP</button>
+              <button id="resetBtn" class="btn-light">Reset</button>
+            </div>
+
+            <div id="status" class="status">Choose an image, then set rows and columns and click <strong>Slice image</strong>.</div>
+
+            <div class="stats">
+              <div class="stat">
+                <div class="stat-label">Image size</div>
+                <div id="imageSizeStat" class="stat-value">-</div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">Grid</div>
+                <div id="gridStat" class="stat-value">4×4</div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">Pieces</div>
+                <div id="piecesStat" class="stat-value">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <div class="preview-head">
+            <div>
+              <h2 class="panel-title">Preview</h2>
+              <div class="preview-meta">The source preview shows the image with the slice lines overlaid. Output previews appear below it.</div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="source-wrap">
+            <div class="source-canvas-wrap">
+              <canvas id="sourceCanvas"></canvas>
+            </div>
+          </div>
+
+          <div id="emptyState" class="empty">No slices yet. Upload an image and click <strong>Slice image</strong>.</div>
+          <div id="previewGrid" class="grid-preview" hidden></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="steps">
+      <div class="step">
+        <h3>How to publish this on GitHub Pages</h3>
+        <ol>
+          <li>On GitHub, create a new repository. A simple name like <code>image-slicer</code> is fine.</li>
+          <li>Upload this file as <code>index.html</code> in the root of the repository.</li>
+          <li>Commit the file to your default branch, usually <code>main</code>.</li>
+          <li>Open the repository on GitHub, then go to <strong>Settings → Pages</strong>.</li>
+          <li>Under <strong>Build and deployment</strong>, choose <strong>Deploy from a branch</strong>, then select your branch and the <code>/root</code> folder, then save. GitHub documents this flow in its Pages quickstart and publishing-source docs.<sup data-citation="5"></sup><sup data-citation="1"></sup></li>
+          <li>Wait about one or two minutes. GitHub will publish the site at a URL like <code>https://YOUR-USERNAME.github.io/image-slicer/</code>.</li>
+        </ol>
+      </div>
+
+      <div class="step">
+        <h3>If you want a custom domain later</h3>
+        <ol>
+          <li>Open <strong>Settings → Pages</strong> in the same repository.</li>
+          <li>Add your custom domain in the Custom domain section.</li>
+          <li>Update DNS records at your domain registrar to point the domain to GitHub Pages.</li>
+          <li>After DNS is correct, enable HTTPS in GitHub Pages settings. GitHub provides official guidance for custom domain setup and management.<sup data-citation="7"></sup><sup data-citation="6"></sup></li>
+        </ol>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const columnsInput = document.getElementById('columnsInput');
+    const rowsInput = document.getElementById('rowsInput');
+    const sliceBtn = document.getElementById('sliceBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const statusBox = document.getElementById('status');
+    const imageSizeStat = document.getElementById('imageSizeStat');
+    const gridStat = document.getElementById('gridStat');
+    const piecesStat = document.getElementById('piecesStat');
+    const sourceCanvas = document.getElementById('sourceCanvas');
+    const sourceCtx = sourceCanvas.getContext('2d');
+    const previewGrid = document.getElementById('previewGrid');
+    const emptyState = document.getElementById('emptyState');
+
+    let loadedImage = null;
+    let loadedFileName = 'image';
+    let slices = [];
+
+    function clampGridValue(value) {
+      const number = Number(value);
+      if (!Number.isFinite(number)) return 2;
+      return Math.min(6, Math.max(2, Math.round(number)));
+    }
+
+    function updateGridStat() {
+      const cols = clampGridValue(columnsInput.value);
+      const rows = clampGridValue(rowsInput.value);
+      columnsInput.value = cols;
+      rowsInput.value = rows;
+      gridStat.textContent = `${cols}×${rows}`;
+    }
+
+    function setStatus(message, tone = 'info') {
+      statusBox.innerHTML = message;
+      const tones = {
+        info: { bg: '#eef4ff', color: '#26438f', border: '#d7e4ff' },
+        ok: { bg: '#ecfdf3', color: '#166534', border: '#bbf7d0' },
+        warn: { bg: '#fff7ed', color: '#9a3412', border: '#fed7aa' },
+      };
+      const style = tones[tone] || tones.info;
+      statusBox.style.background = style.bg;
+      statusBox.style.color = style.color;
+      statusBox.style.borderColor = style.border;
+    }
+
+    function clearPreview() {
+      previewGrid.innerHTML = '';
+      previewGrid.hidden = true;
+      emptyState.hidden = false;
+      piecesStat.textContent = '0';
+      downloadBtn.disabled = true;
+      slices = [];
+      sourceCtx.clearRect(0, 0, sourceCanvas.width, sourceCanvas.height);
+      sourceCanvas.width = 0;
+      sourceCanvas.height = 0;
+    }
+
+    function resetAll() {
+      fileInput.value = '';
+      columnsInput.value = 4;
+      rowsInput.value = 4;
+      loadedImage = null;
+      loadedFileName = 'image';
+      imageSizeStat.textContent = '-';
+      updateGridStat();
+      clearPreview();
+      setStatus('Choose an image, then set rows and columns and click <strong>Slice image</strong>.');
+    }
+
+    function drawSourcePreview() {
+      if (!loadedImage) return;
+      const cols = clampGridValue(columnsInput.value);
+      const rows = clampGridValue(rowsInput.value);
+      const maxDisplayWidth = 720;
+      const scale = Math.min(1, maxDisplayWidth / loadedImage.width);
+      sourceCanvas.width = Math.round(loadedImage.width * scale);
+      sourceCanvas.height = Math.round(loadedImage.height * scale);
+
+      sourceCtx.clearRect(0, 0, sourceCanvas.width, sourceCanvas.height);
+      sourceCtx.drawImage(loadedImage, 0, 0, sourceCanvas.width, sourceCanvas.height);
+
+      const tileWidth = sourceCanvas.width / cols;
+      const tileHeight = sourceCanvas.height / rows;
+
+      sourceCtx.save();
+      sourceCtx.strokeStyle = 'rgba(37, 99, 235, 0.95)';
+      sourceCtx.lineWidth = 2;
+      sourceCtx.fillStyle = 'rgba(37, 99, 235, 0.12)';
+
+      for (let c = 1; c < cols; c += 1) {
+        const x = c * tileWidth;
+        sourceCtx.beginPath();
+        sourceCtx.moveTo(x, 0);
+        sourceCtx.lineTo(x, sourceCanvas.height);
+        sourceCtx.stroke();
+      }
+
+      for (let r = 1; r < rows; r += 1) {
+        const y = r * tileHeight;
+        sourceCtx.beginPath();
+        sourceCtx.moveTo(0, y);
+        sourceCtx.lineTo(sourceCanvas.width, y);
+        sourceCtx.stroke();
+      }
+      sourceCtx.restore();
+    }
+
+    function dataURLToBlob(dataURL) {
+      const parts = dataURL.split(',');
+      const mimeMatch = parts[0].match(/data:(.*?);base64/);
+      const mime = mimeMatch ? mimeMatch[1] : 'image/png';
+      const binary = atob(parts[1]);
+      const array = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i += 1) array[i] = binary.charCodeAt(i);
+      return new Blob([array], { type: mime });
+    }
+
+    function getBaseName(filename) {
+      return filename.replace(/\.[^.]+$/, '') || 'image';
+    }
+
+    function padNumber(value, digits) {
+      return String(value).padStart(digits, '0');
+    }
+
+    function validateInputs() {
+      if (!loadedImage) {
+        setStatus('Please upload an image first.', 'warn');
+        return false;
+      }
+
+      const cols = clampGridValue(columnsInput.value);
+      const rows = clampGridValue(rowsInput.value);
+      columnsInput.value = cols;
+      rowsInput.value = rows;
+      updateGridStat();
+      return true;
+    }
+
+    function sliceImage() {
+      if (!validateInputs()) return;
+
+      const cols = clampGridValue(columnsInput.value);
+      const rows = clampGridValue(rowsInput.value);
+      const tileWidth = loadedImage.width / cols;
+      const tileHeight = loadedImage.height / rows;
+      const baseName = getBaseName(loadedFileName);
+      const total = cols * rows;
+      const digits = String(total).length < 2 ? 2 : String(total).length;
+
+      slices = [];
+      previewGrid.innerHTML = '';
+
+      for (let row = 0; row < rows; row += 1) {
+        for (let col = 0; col < cols; col += 1) {
+          const sx = Math.round(col * tileWidth);
+          const sy = Math.round(row * tileHeight);
+          const sw = Math.round((col + 1) * tileWidth) - sx;
+          const sh = Math.round((row + 1) * tileHeight) - sy;
+
+          const canvas = document.createElement('canvas');
+          canvas.width = sw;
+          canvas.height = sh;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(loadedImage, sx, sy, sw, sh, 0, 0, sw, sh);
+
+          const dataUrl = canvas.toDataURL('image/png');
+          const filename = `${baseName}_r${row + 1}_c${col + 1}_${padNumber(row * cols + col + 1, digits)}.png`;
+
+          slices.push({
+            row: row + 1,
+            col: col + 1,
+            width: sw,
+            height: sh,
+            filename,
+            dataUrl,
+            blob: dataURLToBlob(dataUrl),
+          });
+        }
+      }
+
+      renderSlices();
+      drawSourcePreview();
+      piecesStat.textContent = String(slices.length);
+      downloadBtn.disabled = slices.length === 0;
+      setStatus(`Done. Created <strong>${slices.length}</strong> image pieces from a <strong>${cols}×${rows}</strong> grid. You can preview them below or click <strong>Download ZIP</strong>.`, 'ok');
+    }
+
+    function renderSlices() {
+      if (!slices.length) {
+        previewGrid.hidden = true;
+        emptyState.hidden = false;
+        return;
+      }
+
+      emptyState.hidden = true;
+      previewGrid.hidden = false;
+
+      for (const slice of slices) {
+        const tile = document.createElement('article');
+        tile.className = 'tile';
+        tile.innerHTML = `
+          <img src="${slice.dataUrl}" alt="${slice.filename}" />
+          <div class="tile-body">
+            <div class="tile-name">${slice.filename}</div>
+            <div class="tile-meta">Row ${slice.row}, Col ${slice.col} • ${slice.width}×${slice.height}px</div>
+          </div>
+        `;
+        previewGrid.appendChild(tile);
+      }
+    }
+
+    async function downloadZip() {
+      if (!slices.length) {
+        setStatus('There are no output images yet. Click <strong>Slice image</strong> first.', 'warn');
+        return;
+      }
+
+      if (typeof JSZip === 'undefined') {
+        setStatus('JSZip did not load, so ZIP export is not available. Please refresh the page and try again.', 'warn');
+        return;
+      }
+
+      downloadBtn.disabled = true;
+      setStatus('Preparing ZIP file...', 'info');
+
+      try {
+        const zip = new JSZip();
+        const folder = zip.folder(getBaseName(loadedFileName) + '_slices');
+        slices.forEach((slice) => folder.file(slice.filename, slice.blob));
+
+        const readme = [
+          'Image Grid Slicer output',
+          '',
+          `Source file: ${loadedFileName}`,
+          `Grid: ${clampGridValue(columnsInput.value)} columns x ${clampGridValue(rowsInput.value)} rows`,
+          `Pieces: ${slices.length}`,
+          '',
+          'Files are named by row and column order.'
+        ].join('\n');
+        zip.file('README.txt', readme);
+
+        const zipBlob = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(zipBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${getBaseName(loadedFileName)}_${clampGridValue(columnsInput.value)}x${clampGridValue(rowsInput.value)}_slices.zip`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+
+        setStatus('ZIP file is ready and should now be downloading.', 'ok');
+      } catch (error) {
+        console.error(error);
+        setStatus('ZIP export failed. Please try again.', 'warn');
+      } finally {
+        downloadBtn.disabled = false;
+      }
+    }
+
+    function loadSelectedFile(file) {
+      if (!file) return;
+      if (!/^image\/(jpeg|png|gif)$/i.test(file.type) && !/\.(jpg|jpeg|png|gif)$/i.test(file.name)) {
+        setStatus('Please choose a JPG, PNG, or GIF image file.', 'warn');
+        fileInput.value = '';
+        return;
+      }
+
+      const objectUrl = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = function () {
+        loadedImage = img;
+        loadedFileName = file.name || 'image';
+        imageSizeStat.textContent = `${img.width}×${img.height}`;
+        clearPreview();
+        drawSourcePreview();
+        setStatus(`Loaded <strong>${loadedFileName}</strong>. Now choose rows and columns and click <strong>Slice image</strong>.`, 'info');
+        URL.revokeObjectURL(objectUrl);
+      };
+      img.onerror = function () {
+        setStatus('The image could not be loaded by the browser. Please try another file.', 'warn');
+        URL.revokeObjectURL(objectUrl);
+      };
+      img.src = objectUrl;
+    }
+
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files && event.target.files[0];
+      loadSelectedFile(file);
+    });
+
+    columnsInput.addEventListener('input', () => {
+      updateGridStat();
+      if (loadedImage) drawSourcePreview();
+    });
+
+    rowsInput.addEventListener('input', () => {
+      updateGridStat();
+      if (loadedImage) drawSourcePreview();
+    });
+
+    sliceBtn.addEventListener('click', sliceImage);
+    downloadBtn.addEventListener('click', downloadZip);
+    resetBtn.addEventListener('click', resetAll);
+
+    updateGridStat();
+    resetAll();
+  </script>
+</body>
+</html>
