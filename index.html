@@ -508,11 +508,11 @@
             <div class="row-two">
               <div class="field">
                 <label id="columnsLabel" for="columnsInput">2. Number of columns</label>
-                <input id="columnsInput" type="number" min="2" max="6" step="1" value="4" />
+                <input id="columnsInput" type="number" min="1" max="6" step="1" value="4" />
               </div>
               <div class="field">
                 <label id="rowsLabel" for="rowsInput">3. Number of rows</label>
-                <input id="rowsInput" type="number" min="2" max="6" step="1" value="4" />
+                <input id="rowsInput" type="number" min="1" max="6" step="1" value="4" />
               </div>
             </div>
 
@@ -747,8 +747,8 @@
 
     function clampGridValue(value) {
       const number = Number(value);
-      if (!Number.isFinite(number)) return 2;
-      return Math.min(6, Math.max(2, Math.round(number)));
+      if (!Number.isFinite(number)) return 1;
+      return Math.min(6, Math.max(1, Math.round(number)));
     }
 
     function updateGridStat() {
