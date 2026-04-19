@@ -39,6 +39,81 @@
       margin-bottom: 18px;
     }
 
+    .hero-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      background: #fff;
+      border: 1px solid #e5ebf3;
+      border-radius: 14px;
+      padding: 10px 12px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+    }
+
+    .lang-switch-label {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .lang-buttons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lang-flag-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 72px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2);
+    }
+
+    .lang-flag-btn:hover {
+      background: #f8fbff;
+    }
+
+    .lang-flag-btn.active {
+      border-color: var(--brand);
+      background: #e8f0ff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .lang-flag-img {
+      width: 28px;
+      height: 20px;
+      object-fit: cover;
+      border-radius: 4px;
+      overflow: hidden;
+      flex: 0 0 auto;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.12);
+      display: block;
+    }
+
+    .lang-btn-text {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
     h1 {
       margin: 0 0 8px;
       font-size: 32px;
@@ -55,7 +130,7 @@
 
     .layout {
       display: grid;
-      grid-template-columns: 360px 1fr;
+      grid-template-columns: 360px minmax(0, 1fr);
       gap: 20px;
       align-items: start;
     }
@@ -84,11 +159,13 @@
     .controls {
       display: grid;
       gap: 16px;
+      min-width: 0;
     }
 
     .field {
       display: grid;
       gap: 8px;
+      min-width: 0;
     }
 
     label {
@@ -102,9 +179,11 @@
       line-height: 1.5;
     }
 
-    input[type="file"],
     input[type="number"] {
       width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
       padding: 12px 14px;
       border: 1px solid var(--line);
       border-radius: 12px;
@@ -113,10 +192,38 @@
       color: var(--text);
     }
 
+    .sr-only-file {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .upload-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 160px;
+      max-width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: #e8eefc;
+      color: #1d3f91;
+      font-size: 15px;
+      font-weight: 700;
+      border: 1px solid #cddcfb;
+    }
+
     .row-two {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 14px;
+      min-width: 0;
     }
 
     .btn-row {
@@ -158,6 +265,10 @@
     }
 
     .status {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
       border-radius: 14px;
       padding: 12px 14px;
       font-size: 14px;
@@ -165,6 +276,13 @@
       background: #eef4ff;
       color: #26438f;
       border: 1px solid #d7e4ff;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .status strong {
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     .stats {
@@ -335,6 +453,14 @@
 
     @media (max-width: 640px) {
       .app { padding: 16px; }
+      .hero-bar { flex-direction: column; }
+      .lang-switch {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      .lang-buttons { width: 100%; justify-content: space-between; }
+      .lang-flag-btn { flex: 1; }
       h1 { font-size: 26px; }
       .row-two, .stats { grid-template-columns: 1fr; }
       .preview-head { flex-direction: column; align-items: flex-start; }
@@ -344,30 +470,48 @@
 <body>
   <div class="app">
     <section class="hero">
-      <h1>Image Grid Slicer</h1>
-      <p class="subtitle">Upload a JPG, PNG, or GIF, choose rows and columns from 2 to 6, slice the image into even parts, preview every output tile, and download all pieces as a ZIP file. This file is ready for GitHub Pages.</p>
+      <div class="hero-bar">
+        <div>
+          <h1 id="appTitle">Image Grid Slicer</h1>
+          <p id="appSubtitle" class="subtitle">Upload a JPG, PNG, or GIF, choose rows and columns from 2 to 6, slice the image into even parts, preview every output tile, and download all pieces as a ZIP file. This file is ready for GitHub Pages.</p>
+        </div>
+        <div class="lang-switch">
+          <div id="languageLabel" class="lang-switch-label">Language</div>
+          <div class="lang-buttons" role="group" aria-labelledby="languageLabel">
+            <button id="langEnBtn" class="lang-flag-btn" type="button" aria-label="Switch to English" title="English">
+              <img class="lang-flag-img" src="Flag-gb.png" alt="English" />
+              <span class="lang-btn-text">EN</span>
+            </button>
+            <button id="langZhBtn" class="lang-flag-btn" type="button" aria-label="切換到繁體中文" title="繁體中文">
+              <img class="lang-flag-img" src="Flag-hk.png" alt="繁體中文" />
+              <span class="lang-btn-text">繁中</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
 
     <div class="layout">
       <section class="panel">
         <div class="panel-header">
-          <h2 class="panel-title">Controls</h2>
+          <h2 id="controlsTitle" class="panel-title">Controls</h2>
         </div>
         <div class="panel-body">
           <div class="controls">
             <div class="field">
-              <label for="fileInput">1. Upload image</label>
-              <input id="fileInput" type="file" accept=".jpg,.jpeg,.png,.gif,image/jpeg,image/png,image/gif" />
-              <div class="hint">Supported types: JPG, PNG, GIF. Animated GIF files are accepted, but slicing is based on the current rendered image frame in the browser.</div>
+              <label id="uploadLabel" for="fileInput">1. Upload image</label>
+              <input id="fileInput" class="sr-only-file" type="file" accept=".jpg,.jpeg,.png,.gif,image/jpeg,image/png,image/gif" />
+              <button id="filePickerBtn" class="upload-btn" type="button">Choose file</button>
+              <div id="uploadHint" class="hint">Supported types: JPG, PNG, GIF. Animated GIF files are accepted, but slicing is based on the current rendered image frame in the browser.</div>
             </div>
 
             <div class="row-two">
               <div class="field">
-                <label for="columnsInput">2. Number of columns</label>
+                <label id="columnsLabel" for="columnsInput">2. Number of columns</label>
                 <input id="columnsInput" type="number" min="2" max="6" step="1" value="4" />
               </div>
               <div class="field">
-                <label for="rowsInput">3. Number of rows</label>
+                <label id="rowsLabel" for="rowsInput">3. Number of rows</label>
                 <input id="rowsInput" type="number" min="2" max="6" step="1" value="4" />
               </div>
             </div>
@@ -382,15 +526,15 @@
 
             <div class="stats">
               <div class="stat">
-                <div class="stat-label">Image size</div>
+                <div id="imageSizeLabel" class="stat-label">Image size</div>
                 <div id="imageSizeStat" class="stat-value">-</div>
               </div>
               <div class="stat">
-                <div class="stat-label">Grid</div>
+                <div id="gridLabel" class="stat-label">Grid</div>
                 <div id="gridStat" class="stat-value">4×4</div>
               </div>
               <div class="stat">
-                <div class="stat-label">Pieces</div>
+                <div id="piecesLabel" class="stat-label">Pieces</div>
                 <div id="piecesStat" class="stat-value">0</div>
               </div>
             </div>
@@ -402,8 +546,8 @@
         <div class="panel-header">
           <div class="preview-head">
             <div>
-              <h2 class="panel-title">Preview</h2>
-              <div class="preview-meta">The source preview shows the image with the slice lines overlaid. Output previews appear below it.</div>
+              <h2 id="previewTitle" class="panel-title">Preview</h2>
+              <div id="previewMeta" class="preview-meta">The source preview shows the image with the slice lines overlaid. Output previews appear below it.</div>
             </div>
           </div>
         </div>
@@ -419,15 +563,19 @@
         </div>
       </section>
     </div>
+
   </div>
 
   <script>
     const fileInput = document.getElementById('fileInput');
+    const filePickerBtn = document.getElementById('filePickerBtn');
     const columnsInput = document.getElementById('columnsInput');
     const rowsInput = document.getElementById('rowsInput');
     const sliceBtn = document.getElementById('sliceBtn');
     const downloadBtn = document.getElementById('downloadBtn');
     const resetBtn = document.getElementById('resetBtn');
+    const langEnBtn = document.getElementById('langEnBtn');
+    const langZhBtn = document.getElementById('langZhBtn');
     const statusBox = document.getElementById('status');
     const imageSizeStat = document.getElementById('imageSizeStat');
     const gridStat = document.getElementById('gridStat');
@@ -437,9 +585,165 @@
     const previewGrid = document.getElementById('previewGrid');
     const emptyState = document.getElementById('emptyState');
 
+    const translations = {
+      en: {
+        htmlLang: 'en',
+        pageTitle: 'Image Grid Slicer',
+        appTitle: 'Image Grid Slicer',
+        appSubtitle: 'Upload a JPG, PNG, or GIF, choose rows and columns from 2 to 6, slice the image into even parts, preview every output tile, and download all pieces as a ZIP file. This file is ready for GitHub Pages.',
+        languageLabel: 'Language',
+        controlsTitle: 'Controls',
+        uploadLabel: '1. Upload image',
+        chooseFileBtn: 'Choose file',
+        uploadHint: 'Supported types: JPG, PNG, GIF. Animated GIF files are accepted, but slicing is based on the current rendered image frame in the browser.',
+        columnsLabel: '2. Number of columns',
+        rowsLabel: '3. Number of rows',
+        sliceBtn: 'Slice image',
+        downloadBtn: 'Download ZIP',
+        resetBtn: 'Reset',
+        imageSizeLabel: 'Image size',
+        gridLabel: 'Grid',
+        piecesLabel: 'Pieces',
+        previewTitle: 'Preview',
+        previewMeta: 'The source preview shows the image with the slice lines overlaid. Output previews appear below it.',
+        emptyState: 'No slices yet. Upload an image and click <strong>Slice image</strong>.',
+        defaultStatus: 'Choose an image, then set rows and columns and click <strong>Slice image</strong>.',
+        uploadFirstStatus: 'Please upload an image first.',
+        sliceDoneStatus: 'Done. Created <strong>{count}</strong> image pieces from a <strong>{cols}×{rows}</strong> grid. You can preview them below or click <strong>Download ZIP</strong>.',
+        noOutputStatus: 'There are no output images yet. Click <strong>Slice image</strong> first.',
+        zipUnavailableStatus: 'JSZip did not load, so ZIP export is not available. Please refresh the page and try again.',
+        zipPreparingStatus: 'Preparing ZIP file...',
+        zipReadyStatus: 'ZIP file is ready and should now be downloading.',
+        zipFailedStatus: 'ZIP export failed. Please try again.',
+        invalidFileStatus: 'Please choose a JPG, PNG, or GIF image file.',
+        loadedFileStatus: 'Loaded <strong>{filename}</strong>. Now choose rows and columns and click <strong>Slice image</strong>.',
+        imageLoadFailedStatus: 'The image could not be loaded by the browser. Please try another file.',
+        zipReadmeTitle: 'Image Grid Slicer output',
+        zipReadmeSource: 'Source file: {filename}',
+        zipReadmeGrid: 'Grid: {cols} columns x {rows} rows',
+        zipReadmePieces: 'Pieces: {count}',
+        zipReadmeFooter: 'Files are named by row and column order.',
+        tileMeta: 'Row {row}, Col {col} • {width}×{height}px'
+      },
+      'zh-Hant': {
+        htmlLang: 'zh-Hant',
+        pageTitle: '圖片網格切圖工具',
+        appTitle: '圖片網格切圖工具',
+        appSubtitle: '上傳 JPG、PNG 或 GIF，選擇 2 到 6 的列數與欄數，平均切割圖片、預覽所有輸出切片，並將結果一鍵下載成 ZIP。此檔案可直接部署到 GitHub Pages。',
+        languageLabel: '語言',
+        controlsTitle: '操作面板',
+        uploadLabel: '1. 上傳圖片',
+        chooseFileBtn: '選擇檔案',
+        uploadHint: '支援 JPG、PNG、GIF。可上傳動態 GIF，但瀏覽器切圖會以目前顯示的影像畫面為基準，不會逐幀輸出動畫。',
+        columnsLabel: '2. 欄數',
+        rowsLabel: '3. 列數',
+        sliceBtn: '切割圖片',
+        downloadBtn: '下載 ZIP',
+        resetBtn: '重設',
+        imageSizeLabel: '圖片尺寸',
+        gridLabel: '網格',
+        piecesLabel: '切片數量',
+        previewTitle: '預覽',
+        previewMeta: '上方會顯示加上切割線的原圖預覽，下方則會列出所有輸出切片。',
+        emptyState: '目前還沒有切片。請先上傳圖片，再點擊 <strong>切割圖片</strong>。',
+        defaultStatus: '請先選擇圖片，再設定列數與欄數，然後點擊 <strong>切割圖片</strong>。',
+        uploadFirstStatus: '請先上傳圖片。',
+        sliceDoneStatus: '完成。已從 <strong>{cols}×{rows}</strong> 網格建立 <strong>{count}</strong> 張切片。你可以先在下方預覽，或直接點擊 <strong>下載 ZIP</strong>。',
+        noOutputStatus: '目前還沒有輸出切片。請先點擊 <strong>切割圖片</strong>。',
+        zipUnavailableStatus: 'JSZip 沒有成功載入，因此無法輸出 ZIP。請重新整理頁面後再試一次。',
+        zipPreparingStatus: '正在準備 ZIP 檔案...',
+        zipReadyStatus: 'ZIP 檔案已準備完成，應該已開始下載。',
+        zipFailedStatus: 'ZIP 輸出失敗，請再試一次。',
+        invalidFileStatus: '請選擇 JPG、PNG 或 GIF 圖片檔。',
+        loadedFileStatus: '已載入 <strong>{filename}</strong>。現在請設定列數與欄數，然後點擊 <strong>切割圖片</strong>。',
+        imageLoadFailedStatus: '瀏覽器無法載入這張圖片，請改試其他檔案。',
+        zipReadmeTitle: '圖片網格切圖工具輸出結果',
+        zipReadmeSource: '來源檔案：{filename}',
+        zipReadmeGrid: '網格：{cols} 欄 × {rows} 列',
+        zipReadmePieces: '切片數量：{count}',
+        zipReadmeFooter: '檔名依照列與欄順序命名。',
+        tileMeta: '第 {row} 列，第 {col} 欄 • {width}×{height}px'
+      }
+    };
+
+    let currentLanguage = 'en';
     let loadedImage = null;
     let loadedFileName = 'image';
     let slices = [];
+    let currentStatusTone = 'info';
+    let currentStatusKey = 'defaultStatus';
+    let currentStatusVars = {};
+
+    function t(key, vars = {}) {
+      const dictionary = translations[currentLanguage] || translations.en;
+      const fallback = translations.en[key] || '';
+      let text = dictionary[key] || fallback;
+      return text.replace(/\{(\w+)\}/g, (_, token) => (vars[token] ?? `{${token}}`));
+    }
+
+    function setText(id, key) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = t(key);
+    }
+
+    function setHTML(id, key) {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = t(key);
+    }
+
+    function applyLanguage() {
+      const lang = translations[currentLanguage] ? currentLanguage : 'en';
+      currentLanguage = lang;
+      document.documentElement.lang = translations[lang].htmlLang;
+      document.title = t('pageTitle');
+      langEnBtn.classList.toggle('active', lang === 'en');
+      langZhBtn.classList.toggle('active', lang === 'zh-Hant');
+      langEnBtn.setAttribute('aria-pressed', String(lang === 'en'));
+      langZhBtn.setAttribute('aria-pressed', String(lang === 'zh-Hant'));
+
+      setText('appTitle', 'appTitle');
+      setText('languageLabel', 'languageLabel');
+      setText('controlsTitle', 'controlsTitle');
+      setText('uploadLabel', 'uploadLabel');
+      filePickerBtn.textContent = t('chooseFileBtn');
+      setHTML('uploadHint', 'uploadHint');
+      setText('columnsLabel', 'columnsLabel');
+      setText('rowsLabel', 'rowsLabel');
+      setText('sliceBtn', 'sliceBtn');
+      setText('downloadBtn', 'downloadBtn');
+      setText('resetBtn', 'resetBtn');
+      setText('imageSizeLabel', 'imageSizeLabel');
+      setText('gridLabel', 'gridLabel');
+      setText('piecesLabel', 'piecesLabel');
+      setText('previewTitle', 'previewTitle');
+      setHTML('appSubtitle', 'appSubtitle');
+      setHTML('previewMeta', 'previewMeta');
+      emptyState.innerHTML = previewGrid.hidden ? t('emptyState') : emptyState.innerHTML;
+      updateGridStat();
+      setStatus(currentStatusKey, currentStatusTone, currentStatusVars);
+      renderSlices();
+    }
+
+    function saveLanguagePreference(lang) {
+      try {
+        localStorage.setItem('image-grid-slicer-language', lang);
+      } catch (error) {
+        console.warn('Could not save language preference.', error);
+      }
+    }
+
+    function getInitialLanguage() {
+      try {
+        const saved = localStorage.getItem('image-grid-slicer-language');
+        if (saved && translations[saved]) return saved;
+      } catch (error) {
+        console.warn('Could not read language preference.', error);
+      }
+
+      const browserLang = (navigator.language || '').toLowerCase();
+      if (browserLang.startsWith('zh')) return 'zh-Hant';
+      return 'en';
+    }
 
     function clampGridValue(value) {
       const number = Number(value);
@@ -455,8 +759,11 @@
       gridStat.textContent = `${cols}×${rows}`;
     }
 
-    function setStatus(message, tone = 'info') {
-      statusBox.innerHTML = message;
+    function setStatus(key, tone = 'info', vars = {}) {
+      currentStatusKey = key;
+      currentStatusTone = tone;
+      currentStatusVars = vars;
+      statusBox.innerHTML = t(key, vars);
       const tones = {
         info: { bg: '#eef4ff', color: '#26438f', border: '#d7e4ff' },
         ok: { bg: '#ecfdf3', color: '#166534', border: '#bbf7d0' },
@@ -472,6 +779,7 @@
       previewGrid.innerHTML = '';
       previewGrid.hidden = true;
       emptyState.hidden = false;
+      emptyState.innerHTML = t('emptyState');
       piecesStat.textContent = '0';
       downloadBtn.disabled = true;
       slices = [];
@@ -489,7 +797,7 @@
       imageSizeStat.textContent = '-';
       updateGridStat();
       clearPreview();
-      setStatus('Choose an image, then set rows and columns and click <strong>Slice image</strong>.');
+      setStatus('defaultStatus');
     }
 
     function drawSourcePreview() {
@@ -510,7 +818,6 @@
       sourceCtx.save();
       sourceCtx.strokeStyle = 'rgba(37, 99, 235, 0.95)';
       sourceCtx.lineWidth = 2;
-      sourceCtx.fillStyle = 'rgba(37, 99, 235, 0.12)';
 
       for (let c = 1; c < cols; c += 1) {
         const x = c * tileWidth;
@@ -550,7 +857,7 @@
 
     function validateInputs() {
       if (!loadedImage) {
-        setStatus('Please upload an image first.', 'warn');
+        setStatus('uploadFirstStatus', 'warn');
         return false;
       }
 
@@ -608,18 +915,20 @@
       drawSourcePreview();
       piecesStat.textContent = String(slices.length);
       downloadBtn.disabled = slices.length === 0;
-      setStatus(`Done. Created <strong>${slices.length}</strong> image pieces from a <strong>${cols}×${rows}</strong> grid. You can preview them below or click <strong>Download ZIP</strong>.`, 'ok');
+      setStatus('sliceDoneStatus', 'ok', { count: slices.length, cols, rows });
     }
 
     function renderSlices() {
       if (!slices.length) {
         previewGrid.hidden = true;
         emptyState.hidden = false;
+        emptyState.innerHTML = t('emptyState');
         return;
       }
 
       emptyState.hidden = true;
       previewGrid.hidden = false;
+      previewGrid.innerHTML = '';
 
       for (const slice of slices) {
         const tile = document.createElement('article');
@@ -628,7 +937,7 @@
           <img src="${slice.dataUrl}" alt="${slice.filename}" />
           <div class="tile-body">
             <div class="tile-name">${slice.filename}</div>
-            <div class="tile-meta">Row ${slice.row}, Col ${slice.col} • ${slice.width}×${slice.height}px</div>
+            <div class="tile-meta">${t('tileMeta', { row: slice.row, col: slice.col, width: slice.width, height: slice.height })}</div>
           </div>
         `;
         previewGrid.appendChild(tile);
@@ -637,17 +946,17 @@
 
     async function downloadZip() {
       if (!slices.length) {
-        setStatus('There are no output images yet. Click <strong>Slice image</strong> first.', 'warn');
+        setStatus('noOutputStatus', 'warn');
         return;
       }
 
       if (typeof JSZip === 'undefined') {
-        setStatus('JSZip did not load, so ZIP export is not available. Please refresh the page and try again.', 'warn');
+        setStatus('zipUnavailableStatus', 'warn');
         return;
       }
 
       downloadBtn.disabled = true;
-      setStatus('Preparing ZIP file...', 'info');
+      setStatus('zipPreparingStatus', 'info');
 
       try {
         const zip = new JSZip();
@@ -655,13 +964,13 @@
         slices.forEach((slice) => folder.file(slice.filename, slice.blob));
 
         const readme = [
-          'Image Grid Slicer output',
+          t('zipReadmeTitle'),
           '',
-          `Source file: ${loadedFileName}`,
-          `Grid: ${clampGridValue(columnsInput.value)} columns x ${clampGridValue(rowsInput.value)} rows`,
-          `Pieces: ${slices.length}`,
+          t('zipReadmeSource', { filename: loadedFileName }),
+          t('zipReadmeGrid', { cols: clampGridValue(columnsInput.value), rows: clampGridValue(rowsInput.value) }),
+          t('zipReadmePieces', { count: slices.length }),
           '',
-          'Files are named by row and column order.'
+          t('zipReadmeFooter')
         ].join('\n');
         zip.file('README.txt', readme);
 
@@ -675,10 +984,10 @@
         link.remove();
         URL.revokeObjectURL(url);
 
-        setStatus('ZIP file is ready and should now be downloading.', 'ok');
+        setStatus('zipReadyStatus', 'ok');
       } catch (error) {
         console.error(error);
-        setStatus('ZIP export failed. Please try again.', 'warn');
+        setStatus('zipFailedStatus', 'warn');
       } finally {
         downloadBtn.disabled = false;
       }
@@ -687,7 +996,7 @@
     function loadSelectedFile(file) {
       if (!file) return;
       if (!/^image\/(jpeg|png|gif)$/i.test(file.type) && !/\.(jpg|jpeg|png|gif)$/i.test(file.name)) {
-        setStatus('Please choose a JPG, PNG, or GIF image file.', 'warn');
+        setStatus('invalidFileStatus', 'warn');
         fileInput.value = '';
         return;
       }
@@ -700,15 +1009,19 @@
         imageSizeStat.textContent = `${img.width}×${img.height}`;
         clearPreview();
         drawSourcePreview();
-        setStatus(`Loaded <strong>${loadedFileName}</strong>. Now choose rows and columns and click <strong>Slice image</strong>.`, 'info');
+        setStatus('loadedFileStatus', 'info', { filename: loadedFileName });
         URL.revokeObjectURL(objectUrl);
       };
       img.onerror = function () {
-        setStatus('The image could not be loaded by the browser. Please try another file.', 'warn');
+        setStatus('imageLoadFailedStatus', 'warn');
         URL.revokeObjectURL(objectUrl);
       };
       img.src = objectUrl;
     }
+
+    filePickerBtn.addEventListener('click', () => {
+      fileInput.click();
+    });
 
     fileInput.addEventListener('change', (event) => {
       const file = event.target.files && event.target.files[0];
@@ -725,12 +1038,26 @@
       if (loadedImage) drawSourcePreview();
     });
 
+    langEnBtn.addEventListener('click', () => {
+      currentLanguage = 'en';
+      saveLanguagePreference(currentLanguage);
+      applyLanguage();
+    });
+
+    langZhBtn.addEventListener('click', () => {
+      currentLanguage = 'zh-Hant';
+      saveLanguagePreference(currentLanguage);
+      applyLanguage();
+    });
+
     sliceBtn.addEventListener('click', sliceImage);
     downloadBtn.addEventListener('click', downloadZip);
     resetBtn.addEventListener('click', resetAll);
 
+    currentLanguage = getInitialLanguage();
     updateGridStat();
     resetAll();
+    applyLanguage();
   </script>
 </body>
 </html>
