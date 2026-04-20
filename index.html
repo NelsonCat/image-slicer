@@ -14,10 +14,12 @@
       --muted: #5d6b82;
       --brand: #2563eb;
       --brand-dark: #1d4ed8;
-      --ok: #0f9d58;
-      --warn: #b45309;
       --shadow: 0 14px 34px rgba(21, 32, 51, 0.08);
       --radius: 18px;
+      --grid-blue: rgba(37, 99, 235, 0.95);
+      --grid-blue-soft: rgba(37, 99, 235, 0.18);
+      --grid-orange: rgba(245, 158, 11, 0.95);
+      --grid-orange-soft: rgba(245, 158, 11, 0.18);
     }
 
     * { box-sizing: border-box; }
@@ -29,67 +31,35 @@
       color: var(--text);
     }
 
-    .app {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 24px;
-    }
+    .app { max-width: 1180px; margin: 0 auto; padding: 24px; }
 
-    .hero {
-      margin-bottom: 18px;
-    }
+    .hero { margin-bottom: 18px; }
 
-    .hero-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 16px;
-    }
+    .hero-bar { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
+
+    h1 { margin: 0 0 8px; font-size: 32px; line-height: 1.15; }
+
+    .subtitle { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.6; max-width: 900px; }
 
     .lang-switch {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-      background: #fff;
-      border: 1px solid #e5ebf3;
-      border-radius: 14px;
-      padding: 10px 12px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+      display:flex; align-items:center; gap:10px; flex-shrink:0;
+      background:#fff; border:1px solid #e5ebf3; border-radius:14px;
+      padding:10px 12px; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
     }
 
-    .lang-switch-label {
-      margin: 0;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--muted);
-    }
-
-    .lang-buttons {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .lang-switch-label { margin:0; font-size:13px; font-weight:700; color: var(--muted); }
+    .lang-buttons { display:flex; align-items:center; gap:8px; }
 
     .lang-flag-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-width: 72px;
-      padding: 8px 12px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #fff;
-      color: var(--text);
-      font-size: 14px;
-      line-height: 1;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      min-width:72px; padding:8px 12px; border:1px solid var(--line);
+      border-radius:12px; background:#fff; color:var(--text);
+      font-size:14px; line-height:1;
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2);
+      cursor:pointer;
     }
 
-    .lang-flag-btn:hover {
-      background: #f8fbff;
-    }
+    .lang-flag-btn:hover { background:#f8fbff; }
 
     .lang-flag-btn.active {
       border-color: var(--brand);
@@ -98,42 +68,14 @@
     }
 
     .lang-flag-img {
-      width: 28px;
-      height: 20px;
-      object-fit: cover;
-      border-radius: 4px;
-      overflow: hidden;
-      flex: 0 0 auto;
+      width: 28px; height: 20px; object-fit: cover; border-radius: 4px;
       box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.12);
-      display: block;
+      display:block;
     }
 
-    .lang-btn-text {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
+    .lang-btn-text { font-size: 12px; font-weight: 700; letter-spacing: 0.02em; }
 
-    h1 {
-      margin: 0 0 8px;
-      font-size: 32px;
-      line-height: 1.15;
-    }
-
-    .subtitle {
-      margin: 0;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.6;
-      max-width: 900px;
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: 360px minmax(0, 1fr);
-      gap: 20px;
-      align-items: start;
-    }
+    .layout { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 20px; align-items: start; }
 
     .panel {
       background: var(--panel);
@@ -143,47 +85,17 @@
       overflow: hidden;
     }
 
-    .panel-header {
-      padding: 18px 20px 8px;
-    }
+    .panel-header { padding: 18px 20px 8px; }
+    .panel-title { margin: 0; font-size: 20px; }
+    .panel-body { padding: 20px; }
 
-    .panel-title {
-      margin: 0;
-      font-size: 20px;
-    }
+    .controls { display: grid; gap: 14px; min-width: 0; }
+    .field { display: grid; gap: 8px; min-width: 0; }
+    label { font-size: 14px; font-weight: 700; }
+    .hint { color: var(--muted); font-size: 13px; line-height: 1.5; }
 
-    .panel-body {
-      padding: 20px;
-    }
-
-    .controls {
-      display: grid;
-      gap: 16px;
-      min-width: 0;
-    }
-
-    .field {
-      display: grid;
-      gap: 8px;
-      min-width: 0;
-    }
-
-    label {
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .hint {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    input[type="number"] {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      box-sizing: border-box;
+    input[type="number"], select {
+      width: 100%; max-width: 100%; min-width: 0;
       padding: 12px 14px;
       border: 1px solid var(--line);
       border-radius: 12px;
@@ -193,23 +105,13 @@
     }
 
     .sr-only-file {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
     }
 
     .upload-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 160px;
-      max-width: 100%;
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 160px; max-width: 100%;
       padding: 12px 16px;
       border-radius: 12px;
       background: #e8eefc;
@@ -217,21 +119,12 @@
       font-size: 15px;
       font-weight: 700;
       border: 1px solid #cddcfb;
+      cursor: pointer;
     }
 
-    .row-two {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 14px;
-      min-width: 0;
-    }
+    .row-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; min-width: 0; }
 
-    .btn-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 4px;
-    }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
 
     button {
       appearance: none;
@@ -247,28 +140,13 @@
     button:hover { transform: translateY(-1px); }
     button:disabled { cursor: not-allowed; opacity: 0.55; transform: none; }
 
-    .btn-primary {
-      background: var(--brand);
-      color: white;
-    }
-
+    .btn-primary { background: var(--brand); color: white; }
     .btn-primary:hover { background: var(--brand-dark); }
-
-    .btn-secondary {
-      background: #e8eefc;
-      color: #1d3f91;
-    }
-
-    .btn-light {
-      background: #f3f4f6;
-      color: #374151;
-    }
+    .btn-secondary { background: #e8eefc; color: #1d3f91; }
+    .btn-light { background: #f3f4f6; color: #374151; }
 
     .status {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      box-sizing: border-box;
+      width: 100%; max-width: 100%; min-width: 0;
       border-radius: 14px;
       padding: 12px 14px;
       font-size: 14px;
@@ -280,16 +158,14 @@
       word-break: break-word;
     }
 
-    .status strong {
-      overflow-wrap: anywhere;
-      word-break: break-word;
-    }
+    .status strong { overflow-wrap: anywhere; word-break: break-word; }
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
       gap: 12px;
-      margin-top: 14px;
+      margin-top: 10px;
+      width: 100%; max-width: 100%; min-width: 0;
     }
 
     .stat {
@@ -297,6 +173,8 @@
       border: 1px solid #e5ebf3;
       border-radius: 14px;
       padding: 14px;
+      min-width: 0;
+      overflow: hidden;
     }
 
     .stat-label {
@@ -305,41 +183,95 @@
       margin-bottom: 8px;
       text-transform: uppercase;
       letter-spacing: .04em;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     .stat-value {
       font-size: 22px;
       font-weight: 800;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
-    .preview-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      align-items: center;
-      margin-bottom: 16px;
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 6px;
+      background: #f1f5fb;
+      border: 1px solid #e3eaf6;
+      border-radius: 14px;
     }
 
-    .preview-meta {
-      color: var(--muted);
+    .tab {
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: transparent;
+      color: #334155;
+      border: 1px solid transparent;
       font-size: 14px;
-      line-height: 1.5;
+      font-weight: 800;
     }
 
-    .empty {
-      padding: 36px 20px;
-      border: 2px dashed #d9e3f0;
-      border-radius: 16px;
-      text-align: center;
-      color: var(--muted);
+    .tab.active {
+      background: #ffffff;
+      border-color: #dbe6f8;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+      color: #0f172a;
+    }
+
+    .section-title { margin: 2px 0 0; font-size: 14px; font-weight: 900; color:#0f172a; }
+
+    .custom-tools {
+      display: grid;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid #e7edf5;
+      border-radius: 14px;
       background: #fbfdff;
     }
 
-    .source-wrap {
+    .custom-row {
       display: grid;
+      grid-template-columns: 1fr auto;
       gap: 10px;
-      margin-bottom: 18px;
+      align-items: center;
     }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #e5ebf3;
+      background: #fff;
+      color: #0f172a;
+      font-size: 14px;
+      font-weight: 800;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .pill small { font-weight: 700; color: var(--muted); }
+
+    .btn-mini {
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      background: #f3f4f6;
+      color: #374151;
+      border: 1px solid #e5ebf3;
+    }
+
+    .btn-mini:hover { background: #eef2ff; border-color: #c7d2fe; color:#1d4ed8; }
+
+    .preview-head { display:flex; justify-content:space-between; gap:14px; align-items:center; margin-bottom: 12px; }
+    .preview-meta { color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+    .source-wrap { display:grid; gap:10px; margin-bottom: 14px; }
 
     .source-canvas-wrap {
       overflow: auto;
@@ -347,12 +279,13 @@
       border-radius: 14px;
       background: white;
       padding: 12px;
+      position: relative;
     }
 
     #sourceCanvas {
-      display: block;
+      display:block;
       max-width: 100%;
-      height: auto;
+      height:auto;
       margin: 0 auto;
       background-image:
         linear-gradient(45deg, #f1f5f9 25%, transparent 25%),
@@ -361,13 +294,16 @@
         linear-gradient(-45deg, transparent 75%, #f1f5f9 75%);
       background-size: 20px 20px;
       background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+      border-radius: 10px;
     }
 
-    .grid-preview {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 14px;
+    .overlay {
+      position: absolute;
+      inset: 12px;
+      pointer-events: none;
     }
+
+    .grid-preview { display:grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
 
     .tile {
       border: 1px solid #e4eaf2;
@@ -378,7 +314,7 @@
     }
 
     .tile img {
-      display: block;
+      display:block;
       width: 100%;
       aspect-ratio: 1 / 1;
       object-fit: contain;
@@ -391,79 +327,55 @@
       background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
     }
 
-    .tile-body {
-      padding: 10px 12px 12px;
-    }
+    .tile-body { padding: 10px 12px 12px; }
 
-    .tile-name {
-      font-size: 13px;
-      font-weight: 700;
-      word-break: break-word;
-      margin-bottom: 4px;
-    }
+    .tile-name { font-size: 13px; font-weight: 700; word-break: break-word; margin-bottom: 4px; }
+    .tile-meta { font-size: 12px; color: var(--muted); }
 
-    .tile-meta {
+    .tile-actions { margin-top: 10px; display:flex; justify-content:flex-end; }
+
+    .tile-download {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #f3f4f6;
+      border: 1px solid #e5ebf3;
+      color: #374151;
       font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      max-width: 100%;
+    }
+
+    .tile-download:hover { background: #eef2ff; border-color: #c7d2fe; color: #1d4ed8; }
+
+    .empty {
+      padding: 36px 20px;
+      border: 2px dashed #d9e3f0;
+      border-radius: 16px;
+      text-align:center;
       color: var(--muted);
-    }
-
-    .steps {
-      margin-top: 24px;
-      display: grid;
-      gap: 14px;
-    }
-
-    .step {
-      padding: 16px 18px;
-      border: 1px solid #e7edf5;
-      background: #fff;
-      border-radius: 14px;
-    }
-
-    .step h3 {
-      margin: 0 0 8px;
-      font-size: 17px;
-    }
-
-    .step p,
-    .step li {
-      color: #334155;
-      line-height: 1.65;
-      font-size: 14px;
-    }
-
-    .step ol,
-    .step ul {
-      margin: 8px 0 0 20px;
-      padding: 0;
-    }
-
-    code {
-      background: #eff4fb;
-      padding: 2px 6px;
-      border-radius: 6px;
-      font-family: Consolas, monospace;
-      font-size: 13px;
+      background: #fbfdff;
     }
 
     @media (max-width: 960px) {
       .layout { grid-template-columns: 1fr; }
-      .stats { grid-template-columns: 1fr 1fr 1fr; }
     }
 
     @media (max-width: 640px) {
       .app { padding: 16px; }
       .hero-bar { flex-direction: column; }
-      .lang-switch {
-        width: 100%;
-        justify-content: space-between;
-        flex-wrap: wrap;
-      }
+      .lang-switch { width: 100%; justify-content: space-between; flex-wrap: wrap; }
       .lang-buttons { width: 100%; justify-content: space-between; }
       .lang-flag-btn { flex: 1; }
       h1 { font-size: 26px; }
-      .row-two, .stats { grid-template-columns: 1fr; }
+      .row-two { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr; }
       .preview-head { flex-direction: column; align-items: flex-start; }
+      .tabs { grid-template-columns: 1fr; }
+      .custom-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -473,7 +385,7 @@
       <div class="hero-bar">
         <div>
           <h1 id="appTitle">Image Grid Slicer</h1>
-          <p id="appSubtitle" class="subtitle">Upload a JPG, PNG, or GIF, choose rows and columns from 2 to 6, slice the image into even parts, preview every output tile, and download all pieces as a ZIP file. This file is ready for GitHub Pages.</p>
+          <p id="appSubtitle" class="subtitle">Upload an image, slice it, preview outputs, and download pieces.</p>
         </div>
         <div class="lang-switch">
           <div id="languageLabel" class="lang-switch-label">Language</div>
@@ -502,17 +414,50 @@
               <label id="uploadLabel" for="fileInput">1. Upload image</label>
               <input id="fileInput" class="sr-only-file" type="file" accept=".jpg,.jpeg,.png,.gif,image/jpeg,image/png,image/gif" />
               <button id="filePickerBtn" class="upload-btn" type="button">Choose file</button>
-              <div id="uploadHint" class="hint">Supported types: JPG, PNG, GIF. Animated GIF files are accepted, but slicing is based on the current rendered image frame in the browser.</div>
+              <div id="uploadHint" class="hint">Supported types: JPG, PNG, GIF.</div>
             </div>
 
-            <div class="row-two">
-              <div class="field">
-                <label id="columnsLabel" for="columnsInput">2. Number of columns</label>
-                <input id="columnsInput" type="number" min="1" max="6" step="1" value="4" />
+            <div class="field">
+              <div class="section-title" id="modeTitle">Slicing mode</div>
+              <div class="tabs" role="tablist" aria-label="Slicing mode">
+                <button id="modeEvenBtn" class="tab active" type="button" role="tab" aria-selected="true">Even grid</button>
+                <button id="modeCustomBtn" class="tab" type="button" role="tab" aria-selected="false">Custom grid</button>
               </div>
-              <div class="field">
-                <label id="rowsLabel" for="rowsInput">3. Number of rows</label>
-                <input id="rowsInput" type="number" min="1" max="6" step="1" value="4" />
+              <div id="modeHint" class="hint">Even grid: split by rows and columns. Custom grid: define row lines and per-row column lines, drag to adjust.</div>
+            </div>
+
+            <div id="evenControls">
+              <div class="row-two">
+                <div class="field">
+                  <label id="columnsLabel" for="columnsInput">Columns</label>
+                  <input id="columnsInput" type="number" min="1" max="6" step="1" value="4" />
+                </div>
+                <div class="field">
+                  <label id="rowsLabel" for="rowsInput">Rows</label>
+                  <input id="rowsInput" type="number" min="1" max="6" step="1" value="4" />
+                </div>
+              </div>
+            </div>
+
+            <div id="customControls" class="custom-tools" hidden>
+              <div class="custom-row">
+                <div class="pill" id="customRowInfo"><small>Rows:</small> <span id="customRowCount">1</span> <small>(drag horizontal lines)</small></div>
+                <button id="addRowBtn" class="btn-mini" type="button">+ Row</button>
+              </div>
+              <div class="custom-row">
+                <div class="pill" id="customSelectedRowInfo"><small>Selected row:</small> <span id="selectedRowIndex">1</span> <small>(drag vertical lines inside row)</small></div>
+                <button id="addColBtn" class="btn-mini" type="button">+ Col</button>
+              </div>
+              <div class="custom-row">
+                <div class="hint" id="customHint">Tip: click a row area in the preview to select it. Drag orange lines to change columns for that row. Drag blue lines to change row heights.</div>
+                <button id="resetCustomBtn" class="btn-mini" type="button">Reset</button>
+              </div>
+              <div class="custom-row">
+                <div class="hint" id="deleteHint">Delete: removes the nearest divider to the center of the selected row/rows.</div>
+                <div style="display:flex; gap:10px; justify-content:flex-end;">
+                  <button id="delRowBtn" class="btn-mini" type="button">- Row</button>
+                  <button id="delColBtn" class="btn-mini" type="button">- Col</button>
+                </div>
               </div>
             </div>
 
@@ -522,7 +467,7 @@
               <button id="resetBtn" class="btn-light">Reset</button>
             </div>
 
-            <div id="status" class="status">Choose an image, then set rows and columns and click <strong>Slice image</strong>.</div>
+            <div id="status" class="status">Choose an image, then slice.</div>
 
             <div class="stats">
               <div class="stat">
@@ -531,7 +476,7 @@
               </div>
               <div class="stat">
                 <div id="gridLabel" class="stat-label">Grid</div>
-                <div id="gridStat" class="stat-value">4×4</div>
+                <div id="gridStat" class="stat-value">-</div>
               </div>
               <div class="stat">
                 <div id="piecesLabel" class="stat-label">Pieces</div>
@@ -547,26 +492,28 @@
           <div class="preview-head">
             <div>
               <h2 id="previewTitle" class="panel-title">Preview</h2>
-              <div id="previewMeta" class="preview-meta">The source preview shows the image with the slice lines overlaid. Output previews appear below it.</div>
+              <div id="previewMeta" class="preview-meta">Drag lines in Custom mode. Output previews appear below.</div>
             </div>
           </div>
         </div>
         <div class="panel-body">
           <div class="source-wrap">
-            <div class="source-canvas-wrap">
+            <div class="source-canvas-wrap" id="canvasWrap">
               <canvas id="sourceCanvas"></canvas>
             </div>
           </div>
 
-          <div id="emptyState" class="empty">No slices yet. Upload an image and click <strong>Slice image</strong>.</div>
+          <div id="emptyState" class="empty">No slices yet.</div>
           <div id="previewGrid" class="grid-preview" hidden></div>
         </div>
       </section>
     </div>
-
   </div>
 
   <script>
+    // -----------------------
+    // DOM
+    // -----------------------
     const fileInput = document.getElementById('fileInput');
     const filePickerBtn = document.getElementById('filePickerBtn');
     const columnsInput = document.getElementById('columnsInput');
@@ -574,30 +521,64 @@
     const sliceBtn = document.getElementById('sliceBtn');
     const downloadBtn = document.getElementById('downloadBtn');
     const resetBtn = document.getElementById('resetBtn');
+
     const langEnBtn = document.getElementById('langEnBtn');
     const langZhBtn = document.getElementById('langZhBtn');
+
     const statusBox = document.getElementById('status');
     const imageSizeStat = document.getElementById('imageSizeStat');
     const gridStat = document.getElementById('gridStat');
     const piecesStat = document.getElementById('piecesStat');
+
     const sourceCanvas = document.getElementById('sourceCanvas');
     const sourceCtx = sourceCanvas.getContext('2d');
+    const canvasWrap = document.getElementById('canvasWrap');
+
     const previewGrid = document.getElementById('previewGrid');
     const emptyState = document.getElementById('emptyState');
 
+    const modeEvenBtn = document.getElementById('modeEvenBtn');
+    const modeCustomBtn = document.getElementById('modeCustomBtn');
+    const evenControls = document.getElementById('evenControls');
+    const customControls = document.getElementById('customControls');
+
+    const addRowBtn = document.getElementById('addRowBtn');
+    const addColBtn = document.getElementById('addColBtn');
+    const delRowBtn = document.getElementById('delRowBtn');
+    const delColBtn = document.getElementById('delColBtn');
+    const resetCustomBtn = document.getElementById('resetCustomBtn');
+    const customRowCount = document.getElementById('customRowCount');
+    const selectedRowIndex = document.getElementById('selectedRowIndex');
+
+    // -----------------------
+    // i18n
+    // -----------------------
     const translations = {
       en: {
         htmlLang: 'en',
         pageTitle: 'Image Grid Slicer',
         appTitle: 'Image Grid Slicer',
-        appSubtitle: 'Upload a JPG, PNG, or GIF, choose rows and columns from 2 to 6, slice the image into even parts, preview every output tile, and download all pieces as a ZIP file. This file is ready for GitHub Pages.',
+        appSubtitle: 'Upload a JPG, PNG, or GIF. Use Even grid or Custom grid (row-by-row). Preview slices and download as ZIP.',
         languageLabel: 'Language',
         controlsTitle: 'Controls',
         uploadLabel: '1. Upload image',
         chooseFileBtn: 'Choose file',
-        uploadHint: 'Supported types: JPG, PNG, GIF. Animated GIF files are accepted, but slicing is based on the current rendered image frame in the browser.',
-        columnsLabel: '2. Number of columns',
-        rowsLabel: '3. Number of rows',
+        uploadHint: 'Supported types: JPG, PNG, GIF.',
+        modeTitle: 'Slicing mode',
+        modeEven: 'Even grid',
+        modeCustom: 'Custom grid',
+        modeHint: 'Even: split by rows and columns. Custom: define row lines and per-row column lines; drag lines to adjust.',
+        columnsLabel: 'Columns',
+        rowsLabel: 'Rows',
+        addRow: '+ Row',
+        addCol: '+ Col',
+        delRow: '- Row',
+        delCol: '- Col',
+        deleteHint: 'Delete: removes the nearest divider (not the outer border). Select a row first, then delete a column line for that row.',
+        customReset: 'Reset',
+        customRowInfo: 'Rows:',
+        customSelectedRow: 'Selected row:',
+        customHint: 'Tip: click a row area in the preview to select it. Drag orange lines to change columns for that row. Drag blue lines to change row heights.',
         sliceBtn: 'Slice image',
         downloadBtn: 'Download ZIP',
         resetBtn: 'Reset',
@@ -605,38 +586,53 @@
         gridLabel: 'Grid',
         piecesLabel: 'Pieces',
         previewTitle: 'Preview',
-        previewMeta: 'The source preview shows the image with the slice lines overlaid. Output previews appear below it.',
-        emptyState: 'No slices yet. Upload an image and click <strong>Slice image</strong>.',
-        defaultStatus: 'Choose an image, then set rows and columns and click <strong>Slice image</strong>.',
+        previewMeta: 'In Custom mode, drag lines to adjust. Output previews appear below.',
+        emptyState: 'No slices yet.',
+        defaultStatus: 'Choose an image, then slice.',
         uploadFirstStatus: 'Please upload an image first.',
-        sliceDoneStatus: 'Done. Created <strong>{count}</strong> image pieces from a <strong>{cols}×{rows}</strong> grid. You can preview them below or click <strong>Download ZIP</strong>.',
-        noOutputStatus: 'There are no output images yet. Click <strong>Slice image</strong> first.',
+        loadedFileStatus: 'Loaded <strong>{filename}</strong>.',
+        invalidFileStatus: 'Please choose a JPG, PNG, or GIF image file.',
+        imageLoadFailedStatus: 'The image could not be loaded by the browser. Please try another file.',
         zipUnavailableStatus: 'JSZip did not load, so ZIP export is not available. Please refresh the page and try again.',
         zipPreparingStatus: 'Preparing ZIP file...',
         zipReadyStatus: 'ZIP file is ready and should now be downloading.',
         zipFailedStatus: 'ZIP export failed. Please try again.',
-        invalidFileStatus: 'Please choose a JPG, PNG, or GIF image file.',
-        loadedFileStatus: 'Loaded <strong>{filename}</strong>. Now choose rows and columns and click <strong>Slice image</strong>.',
-        imageLoadFailedStatus: 'The image could not be loaded by the browser. Please try another file.',
+        noOutputStatus: 'There are no output images yet. Slice first.',
+        downloadSlice: 'Download slice',
+        tileMeta: 'Row {row}, Col {col} • {width}×{height}px',
+        sliceDoneEven: 'Done. Created <strong>{count}</strong> pieces from <strong>{cols}×{rows}</strong>.',
+        sliceDoneCustom: 'Done. Created <strong>{count}</strong> pieces from a custom grid.',
         zipReadmeTitle: 'Image Grid Slicer output',
         zipReadmeSource: 'Source file: {filename}',
-        zipReadmeGrid: 'Grid: {cols} columns x {rows} rows',
+        zipReadmeGrid: 'Grid: {grid}',
         zipReadmePieces: 'Pieces: {count}',
-        zipReadmeFooter: 'Files are named by row and column order.',
-        tileMeta: 'Row {row}, Col {col} • {width}×{height}px'
+        zipReadmeFooter: 'Files are named by row/col order.'
       },
       'zh-Hant': {
         htmlLang: 'zh-Hant',
-        pageTitle: '圖片網格切圖工具',
-        appTitle: '圖片網格切圖工具',
-        appSubtitle: '上傳 JPG、PNG 或 GIF，選擇 2 到 6 的列數與欄數，平均切割圖片、預覽所有輸出切片，並將結果一鍵下載成 ZIP。此檔案可直接部署到 GitHub Pages。',
+        pageTitle: '圖片自訂切圖工具',
+        appTitle: '圖片自訂切圖工具',
+        appSubtitle: '上傳 JPG、PNG 或 GIF。支援「均分網格」與「逐行自訂網格」，可拖曳格線調整。預覽切片並下載 ZIP。',
         languageLabel: '語言',
         controlsTitle: '操作面板',
         uploadLabel: '1. 上傳圖片',
         chooseFileBtn: '選擇檔案',
-        uploadHint: '支援 JPG、PNG、GIF。可上傳動態 GIF，但瀏覽器切圖會以目前顯示的影像畫面為基準，不會逐幀輸出動畫。',
-        columnsLabel: '2. 欄數',
-        rowsLabel: '3. 列數',
+        uploadHint: '支援 JPG、PNG、GIF。',
+        modeTitle: '切割模式',
+        modeEven: '均分網格',
+        modeCustom: '逐行自訂',
+        modeHint: '均分：用列數與欄數平均切割。逐行自訂：先切水平列，再針對每一列設定不同的垂直切線並拖曳調整。',
+        columnsLabel: '欄數',
+        rowsLabel: '列數',
+        addRow: '+ 增加列',
+        addCol: '+ 增加欄',
+        delRow: '- 刪除列',
+        delCol: '- 刪除欄',
+        deleteHint: '刪除：會移除最接近的「內部」格線（不會刪外框）。請先選取某一列，再刪除該列的欄分割線。',
+        customReset: '重設',
+        customRowInfo: '列數：',
+        customSelectedRow: '已選列：',
+        customHint: '提示：在預覽圖點擊某一列以選取；拖曳橘色線可調整該列的欄切線；拖曳藍色線可調整列高度。',
         sliceBtn: '切割圖片',
         downloadBtn: '下載 ZIP',
         resetBtn: '重設',
@@ -644,51 +640,53 @@
         gridLabel: '網格',
         piecesLabel: '切片數量',
         previewTitle: '預覽',
-        previewMeta: '上方會顯示加上切割線的原圖預覽，下方則會列出所有輸出切片。',
-        emptyState: '目前還沒有切片。請先上傳圖片，再點擊 <strong>切割圖片</strong>。',
-        defaultStatus: '請先選擇圖片，再設定列數與欄數，然後點擊 <strong>切割圖片</strong>。',
+        previewMeta: '逐行自訂模式可拖曳格線調整，下方會顯示輸出切片。',
+        emptyState: '目前還沒有切片。',
+        defaultStatus: '請先選擇圖片，再進行切割。',
         uploadFirstStatus: '請先上傳圖片。',
-        sliceDoneStatus: '完成。已從 <strong>{cols}×{rows}</strong> 網格建立 <strong>{count}</strong> 張切片。你可以先在下方預覽，或直接點擊 <strong>下載 ZIP</strong>。',
-        noOutputStatus: '目前還沒有輸出切片。請先點擊 <strong>切割圖片</strong>。',
+        loadedFileStatus: '已載入 <strong>{filename}</strong>。',
+        invalidFileStatus: '請選擇 JPG、PNG 或 GIF 圖片檔。',
+        imageLoadFailedStatus: '瀏覽器無法載入這張圖片，請改試其他檔案。',
         zipUnavailableStatus: 'JSZip 沒有成功載入，因此無法輸出 ZIP。請重新整理頁面後再試一次。',
         zipPreparingStatus: '正在準備 ZIP 檔案...',
         zipReadyStatus: 'ZIP 檔案已準備完成，應該已開始下載。',
         zipFailedStatus: 'ZIP 輸出失敗，請再試一次。',
-        invalidFileStatus: '請選擇 JPG、PNG 或 GIF 圖片檔。',
-        loadedFileStatus: '已載入 <strong>{filename}</strong>。現在請設定列數與欄數，然後點擊 <strong>切割圖片</strong>。',
-        imageLoadFailedStatus: '瀏覽器無法載入這張圖片，請改試其他檔案。',
-        zipReadmeTitle: '圖片網格切圖工具輸出結果',
+        noOutputStatus: '目前還沒有輸出切片，請先切割。',
+        downloadSlice: '下載此切片',
+        tileMeta: '第 {row} 列，第 {col} 欄 • {width}×{height}px',
+        sliceDoneEven: '完成。已由 <strong>{cols}×{rows}</strong> 產生 <strong>{count}</strong> 張切片。',
+        sliceDoneCustom: '完成。已由自訂網格產生 <strong>{count}</strong> 張切片。',
+        zipReadmeTitle: '圖片自訂切圖工具輸出結果',
         zipReadmeSource: '來源檔案：{filename}',
-        zipReadmeGrid: '網格：{cols} 欄 × {rows} 列',
+        zipReadmeGrid: '網格：{grid}',
         zipReadmePieces: '切片數量：{count}',
-        zipReadmeFooter: '檔名依照列與欄順序命名。',
-        tileMeta: '第 {row} 列，第 {col} 欄 • {width}×{height}px'
+        zipReadmeFooter: '檔名依照列/欄順序命名。'
       }
     };
 
     let currentLanguage = 'en';
-    let loadedImage = null;
-    let loadedFileName = 'image';
-    let slices = [];
-    let currentStatusTone = 'info';
-    let currentStatusKey = 'defaultStatus';
-    let currentStatusVars = {};
-
     function t(key, vars = {}) {
-      const dictionary = translations[currentLanguage] || translations.en;
+      const dict = translations[currentLanguage] || translations.en;
       const fallback = translations.en[key] || '';
-      let text = dictionary[key] || fallback;
+      let text = dict[key] || fallback;
       return text.replace(/\{(\w+)\}/g, (_, token) => (vars[token] ?? `{${token}}`));
     }
 
-    function setText(id, key) {
-      const el = document.getElementById(id);
-      if (el) el.textContent = t(key);
+    function setText(id, key) { const el = document.getElementById(id); if (el) el.textContent = t(key); }
+    function setHTML(id, key) { const el = document.getElementById(id); if (el) el.innerHTML = t(key); }
+
+    function saveLanguagePreference(lang) {
+      try { localStorage.setItem('image-grid-slicer-language', lang); } catch (_) {}
     }
 
-    function setHTML(id, key) {
-      const el = document.getElementById(id);
-      if (el) el.innerHTML = t(key);
+    function getInitialLanguage() {
+      try {
+        const saved = localStorage.getItem('image-grid-slicer-language');
+        if (saved && translations[saved]) return saved;
+      } catch (_) {}
+      const browserLang = (navigator.language || '').toLowerCase();
+      if (browserLang.startsWith('zh')) return 'zh-Hant';
+      return 'en';
     }
 
     function applyLanguage() {
@@ -702,47 +700,72 @@
       langZhBtn.setAttribute('aria-pressed', String(lang === 'zh-Hant'));
 
       setText('appTitle', 'appTitle');
+      setHTML('appSubtitle', 'appSubtitle');
       setText('languageLabel', 'languageLabel');
       setText('controlsTitle', 'controlsTitle');
       setText('uploadLabel', 'uploadLabel');
       filePickerBtn.textContent = t('chooseFileBtn');
       setHTML('uploadHint', 'uploadHint');
+      setText('modeTitle', 'modeTitle');
+      modeEvenBtn.textContent = t('modeEven');
+      modeCustomBtn.textContent = t('modeCustom');
+      setHTML('modeHint', 'modeHint');
       setText('columnsLabel', 'columnsLabel');
       setText('rowsLabel', 'rowsLabel');
-      setText('sliceBtn', 'sliceBtn');
-      setText('downloadBtn', 'downloadBtn');
-      setText('resetBtn', 'resetBtn');
+      addRowBtn.textContent = t('addRow');
+      addColBtn.textContent = t('addCol');
+      delRowBtn.textContent = t('delRow');
+      delColBtn.textContent = t('delCol');
+      resetCustomBtn.textContent = t('customReset');
+      document.getElementById('customHint').textContent = t('customHint');
+      document.getElementById('deleteHint').textContent = t('deleteHint');
+      sliceBtn.textContent = t('sliceBtn');
+      downloadBtn.textContent = t('downloadBtn');
+      resetBtn.textContent = t('resetBtn');
       setText('imageSizeLabel', 'imageSizeLabel');
       setText('gridLabel', 'gridLabel');
       setText('piecesLabel', 'piecesLabel');
       setText('previewTitle', 'previewTitle');
-      setHTML('appSubtitle', 'appSubtitle');
       setHTML('previewMeta', 'previewMeta');
-      emptyState.innerHTML = previewGrid.hidden ? t('emptyState') : emptyState.innerHTML;
-      updateGridStat();
-      setStatus(currentStatusKey, currentStatusTone, currentStatusVars);
+      emptyState.textContent = previewGrid.hidden ? t('emptyState') : emptyState.textContent;
+
+      updateCustomLabels();
       renderSlices();
+      redraw();
     }
 
-    function saveLanguagePreference(lang) {
-      try {
-        localStorage.setItem('image-grid-slicer-language', lang);
-      } catch (error) {
-        console.warn('Could not save language preference.', error);
-      }
-    }
+    // -----------------------
+    // State
+    // -----------------------
+    let loadedImage = null;
+    let loadedFileName = 'image';
+    let slices = [];
 
-    function getInitialLanguage() {
-      try {
-        const saved = localStorage.getItem('image-grid-slicer-language');
-        if (saved && translations[saved]) return saved;
-      } catch (error) {
-        console.warn('Could not read language preference.', error);
-      }
+    let mode = 'even'; // 'even' | 'custom'
 
-      const browserLang = (navigator.language || '').toLowerCase();
-      if (browserLang.startsWith('zh')) return 'zh-Hant';
-      return 'en';
+    // For preview scaling
+    let drawScale = 1;
+    let drawOffsetX = 0;
+    let drawOffsetY = 0;
+
+    // Custom grid model (in IMAGE PIXELS)
+    // yLines includes 0 and imgH; internal lines define rows.
+    // rowXLines[rowIndex] includes 0 and imgW; internal lines define columns for that row.
+    let yLines = [0, 0];
+    let rowXLines = []; // Array< number[] >
+    let selectedRow = 0;
+
+    // Drag state
+    let dragging = null; // {type:'y'|'x', index:number, row:number}
+
+    // -----------------------
+    // Helpers
+    // -----------------------
+    function clamp(v, min, max) { return Math.min(max, Math.max(min, v)); }
+
+    function sortUnique(arr) {
+      const out = Array.from(new Set(arr.map(n => Math.round(n)))).sort((a,b)=>a-b);
+      return out;
     }
 
     function clampGridValue(value) {
@@ -751,19 +774,8 @@
       return Math.min(6, Math.max(1, Math.round(number)));
     }
 
-    function updateGridStat() {
-      const cols = clampGridValue(columnsInput.value);
-      const rows = clampGridValue(rowsInput.value);
-      columnsInput.value = cols;
-      rowsInput.value = rows;
-      gridStat.textContent = `${cols}×${rows}`;
-    }
-
-    function setStatus(key, tone = 'info', vars = {}) {
-      currentStatusKey = key;
-      currentStatusTone = tone;
-      currentStatusVars = vars;
-      statusBox.innerHTML = t(key, vars);
+    function setStatusHTML(html, tone = 'info') {
+      statusBox.innerHTML = html;
       const tones = {
         info: { bg: '#eef4ff', color: '#26438f', border: '#d7e4ff' },
         ok: { bg: '#ecfdf3', color: '#166534', border: '#bbf7d0' },
@@ -775,67 +787,11 @@
       statusBox.style.borderColor = style.border;
     }
 
-    function clearPreview() {
-      previewGrid.innerHTML = '';
-      previewGrid.hidden = true;
-      emptyState.hidden = false;
-      emptyState.innerHTML = t('emptyState');
-      piecesStat.textContent = '0';
-      downloadBtn.disabled = true;
-      slices = [];
-      sourceCtx.clearRect(0, 0, sourceCanvas.width, sourceCanvas.height);
-      sourceCanvas.width = 0;
-      sourceCanvas.height = 0;
-    }
+    function setStatus(key, tone='info', vars={}) { setStatusHTML(t(key, vars), tone); }
 
-    function resetAll() {
-      fileInput.value = '';
-      columnsInput.value = 4;
-      rowsInput.value = 4;
-      loadedImage = null;
-      loadedFileName = 'image';
-      imageSizeStat.textContent = '-';
-      updateGridStat();
-      clearPreview();
-      setStatus('defaultStatus');
-    }
+    function getBaseName(filename) { return filename.replace(/\.[^.]+$/, '') || 'image'; }
 
-    function drawSourcePreview() {
-      if (!loadedImage) return;
-      const cols = clampGridValue(columnsInput.value);
-      const rows = clampGridValue(rowsInput.value);
-      const maxDisplayWidth = 720;
-      const scale = Math.min(1, maxDisplayWidth / loadedImage.width);
-      sourceCanvas.width = Math.round(loadedImage.width * scale);
-      sourceCanvas.height = Math.round(loadedImage.height * scale);
-
-      sourceCtx.clearRect(0, 0, sourceCanvas.width, sourceCanvas.height);
-      sourceCtx.drawImage(loadedImage, 0, 0, sourceCanvas.width, sourceCanvas.height);
-
-      const tileWidth = sourceCanvas.width / cols;
-      const tileHeight = sourceCanvas.height / rows;
-
-      sourceCtx.save();
-      sourceCtx.strokeStyle = 'rgba(37, 99, 235, 0.95)';
-      sourceCtx.lineWidth = 2;
-
-      for (let c = 1; c < cols; c += 1) {
-        const x = c * tileWidth;
-        sourceCtx.beginPath();
-        sourceCtx.moveTo(x, 0);
-        sourceCtx.lineTo(x, sourceCanvas.height);
-        sourceCtx.stroke();
-      }
-
-      for (let r = 1; r < rows; r += 1) {
-        const y = r * tileHeight;
-        sourceCtx.beginPath();
-        sourceCtx.moveTo(0, y);
-        sourceCtx.lineTo(sourceCanvas.width, y);
-        sourceCtx.stroke();
-      }
-      sourceCtx.restore();
-    }
+    function padNumber(value, digits) { return String(value).padStart(digits, '0'); }
 
     function dataURLToBlob(dataURL) {
       const parts = dataURL.split(',');
@@ -847,33 +803,309 @@
       return new Blob([array], { type: mime });
     }
 
-    function getBaseName(filename) {
-      return filename.replace(/\.[^.]+$/, '') || 'image';
+    function updateGridStatText(text) {
+      gridStat.textContent = text;
     }
 
-    function padNumber(value, digits) {
-      return String(value).padStart(digits, '0');
+    function updateCustomLabels() {
+      if (mode !== 'custom') return;
+      const rows = Math.max(1, yLines.length - 1);
+      customRowCount.textContent = String(rows);
+      selectedRowIndex.textContent = String(selectedRow + 1);
+
+      const rowInfo = document.getElementById('customRowInfo');
+      rowInfo.innerHTML = `<small>${t('customRowInfo')}</small> <span id="customRowCount">${rows}</span> <small>(${currentLanguage === 'zh-Hant' ? '拖曳水平線' : 'drag horizontal lines'})</small>`;
+      const selInfo = document.getElementById('customSelectedRowInfo');
+      selInfo.innerHTML = `<small>${t('customSelectedRow')}</small> <span id="selectedRowIndex">${selectedRow + 1}</span> <small>(${currentLanguage === 'zh-Hant' ? '拖曳列內垂直線' : 'drag vertical lines inside row'})</small>`;
+
+      // re-bind ids after innerHTML replacement
+      document.getElementById('customRowCount').textContent = String(rows);
+      document.getElementById('selectedRowIndex').textContent = String(selectedRow + 1);
+    }
+
+    function resetCustomGrid() {
+      if (!loadedImage) return;
+      const w = loadedImage.width;
+      const h = loadedImage.height;
+      yLines = [0, h];
+      rowXLines = [[0, w]];
+      selectedRow = 0;
+      dragging = null;
+      updateCustomLabels();
+      redraw();
+    }
+
+    function ensureCustomGridInitialized() {
+      if (!loadedImage) return;
+      const w = loadedImage.width;
+      const h = loadedImage.height;
+      if (yLines.length < 2 || yLines[0] !== 0 || yLines[yLines.length-1] !== h) {
+        yLines = [0, h];
+      }
+      const rowCount = yLines.length - 1;
+      if (rowXLines.length !== rowCount) {
+        const newRowX = [];
+        for (let i=0;i<rowCount;i++) {
+          newRowX[i] = rowXLines[i] && rowXLines[i].length >= 2 ? rowXLines[i] : [0, w];
+          // enforce boundaries
+          newRowX[i][0] = 0;
+          newRowX[i][newRowX[i].length-1] = w;
+          newRowX[i] = sortUnique(newRowX[i]);
+        }
+        rowXLines = newRowX;
+      }
+      selectedRow = clamp(selectedRow, 0, rowCount-1);
+      updateCustomLabels();
+    }
+
+    function setMode(nextMode) {
+      mode = nextMode;
+      const evenActive = mode === 'even';
+      modeEvenBtn.classList.toggle('active', evenActive);
+      modeCustomBtn.classList.toggle('active', !evenActive);
+      modeEvenBtn.setAttribute('aria-selected', String(evenActive));
+      modeCustomBtn.setAttribute('aria-selected', String(!evenActive));
+      evenControls.hidden = !evenActive;
+      customControls.hidden = evenActive;
+
+      if (mode === 'custom') {
+        ensureCustomGridInitialized();
+        setStatus('defaultStatus', 'info');
+      }
+      redraw();
+    }
+
+    // -----------------------
+    // Drawing / interaction (Custom grid)
+    // -----------------------
+    function computeCanvasTransform() {
+      if (!loadedImage) return;
+      const maxDisplayWidth = 720;
+      drawScale = Math.min(1, maxDisplayWidth / loadedImage.width);
+      sourceCanvas.width = Math.round(loadedImage.width * drawScale);
+      sourceCanvas.height = Math.round(loadedImage.height * drawScale);
+      drawOffsetX = 0;
+      drawOffsetY = 0;
+    }
+
+    function redraw() {
+      sourceCtx.clearRect(0, 0, sourceCanvas.width, sourceCanvas.height);
+      if (!loadedImage) return;
+      computeCanvasTransform();
+      sourceCtx.clearRect(0, 0, sourceCanvas.width, sourceCanvas.height);
+      sourceCtx.drawImage(loadedImage, 0, 0, sourceCanvas.width, sourceCanvas.height);
+
+      if (mode === 'even') {
+        const cols = clampGridValue(columnsInput.value);
+        const rows = clampGridValue(rowsInput.value);
+        drawEvenLines(cols, rows);
+        updateGridStatText(`${cols}×${rows}`);
+      } else {
+        ensureCustomGridInitialized();
+        drawCustomLines();
+        updateGridStatText(customGridSummary());
+      }
+    }
+
+    function drawEvenLines(cols, rows) {
+      const tileW = sourceCanvas.width / cols;
+      const tileH = sourceCanvas.height / rows;
+      sourceCtx.save();
+      sourceCtx.strokeStyle = varGet('--grid-blue');
+      sourceCtx.lineWidth = 2;
+      for (let c=1;c<cols;c++) {
+        const x = c * tileW;
+        sourceCtx.beginPath();
+        sourceCtx.moveTo(x, 0);
+        sourceCtx.lineTo(x, sourceCanvas.height);
+        sourceCtx.stroke();
+      }
+      for (let r=1;r<rows;r++) {
+        const y = r * tileH;
+        sourceCtx.beginPath();
+        sourceCtx.moveTo(0, y);
+        sourceCtx.lineTo(sourceCanvas.width, y);
+        sourceCtx.stroke();
+      }
+      sourceCtx.restore();
+    }
+
+    function varGet(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    function drawCustomLines() {
+      const w = loadedImage.width;
+      const h = loadedImage.height;
+
+      // highlight selected row area
+      const y0 = yLines[selectedRow];
+      const y1 = yLines[selectedRow+1];
+      const ry0 = y0 * drawScale;
+      const rh = (y1 - y0) * drawScale;
+      sourceCtx.save();
+      sourceCtx.fillStyle = varGet('--grid-orange-soft');
+      sourceCtx.fillRect(0, ry0, sourceCanvas.width, rh);
+      sourceCtx.restore();
+
+      // horizontal lines (rows) - blue
+      sourceCtx.save();
+      sourceCtx.strokeStyle = varGet('--grid-blue');
+      sourceCtx.lineWidth = 2;
+      for (let i=1;i<yLines.length-1;i++) {
+        const y = yLines[i] * drawScale;
+        sourceCtx.beginPath();
+        sourceCtx.moveTo(0, y);
+        sourceCtx.lineTo(sourceCanvas.width, y);
+        sourceCtx.stroke();
+      }
+      sourceCtx.restore();
+
+      // vertical lines for selected row only - orange
+      const xs = rowXLines[selectedRow] || [0, w];
+      sourceCtx.save();
+      sourceCtx.strokeStyle = varGet('--grid-orange');
+      sourceCtx.lineWidth = 2;
+      for (let i=1;i<xs.length-1;i++) {
+        const x = xs[i] * drawScale;
+        sourceCtx.beginPath();
+        sourceCtx.moveTo(x, ry0);
+        sourceCtx.lineTo(x, ry0 + rh);
+        sourceCtx.stroke();
+      }
+      sourceCtx.restore();
+
+      // subtle boundary lines (top/bottom of selected row)
+      sourceCtx.save();
+      sourceCtx.strokeStyle = varGet('--grid-orange');
+      sourceCtx.globalAlpha = 0.25;
+      sourceCtx.lineWidth = 2;
+      sourceCtx.beginPath();
+      sourceCtx.moveTo(0, ry0);
+      sourceCtx.lineTo(sourceCanvas.width, ry0);
+      sourceCtx.stroke();
+      sourceCtx.beginPath();
+      sourceCtx.moveTo(0, ry0 + rh);
+      sourceCtx.lineTo(sourceCanvas.width, ry0 + rh);
+      sourceCtx.stroke();
+      sourceCtx.restore();
+    }
+
+    function customGridSummary() {
+      const rows = yLines.length - 1;
+      const colsPerRow = rowXLines.map(xs => Math.max(1, (xs?.length || 2) - 1));
+      const maxCols = colsPerRow.length ? Math.max(...colsPerRow) : 1;
+      const minCols = colsPerRow.length ? Math.min(...colsPerRow) : 1;
+      if (rows === 1) return `${rows} row • ${colsPerRow[0] || 1} cols`;
+      if (minCols === maxCols) return `${rows} rows • ${maxCols} cols`;
+      return `${rows} rows • ${minCols}-${maxCols} cols`;
+    }
+
+    function canvasPointToImage(x, y) {
+      return { ix: x / drawScale, iy: y / drawScale };
+    }
+
+    function pickHandle(x, y) {
+      if (mode !== 'custom' || !loadedImage) return null;
+      const tol = 7; // px in canvas coords
+      const w = loadedImage.width;
+
+      // check horizontal lines first
+      for (let i=1;i<yLines.length-1;i++) {
+        const ly = yLines[i] * drawScale;
+        if (Math.abs(y - ly) <= tol) {
+          return { type: 'y', index: i, row: -1 };
+        }
+      }
+
+      // check vertical lines in selected row
+      const y0 = yLines[selectedRow] * drawScale;
+      const y1 = yLines[selectedRow+1] * drawScale;
+      if (y >= y0 && y <= y1) {
+        const xs = rowXLines[selectedRow] || [0, w];
+        for (let i=1;i<xs.length-1;i++) {
+          const lx = xs[i] * drawScale;
+          if (Math.abs(x - lx) <= tol) {
+            return { type: 'x', index: i, row: selectedRow };
+          }
+        }
+      }
+
+      return null;
+    }
+
+    function selectRowByY(y) {
+      if (!loadedImage || mode !== 'custom') return;
+      const iy = y / drawScale;
+      for (let r=0;r<yLines.length-1;r++) {
+        if (iy >= yLines[r] && iy <= yLines[r+1]) {
+          selectedRow = r;
+          updateCustomLabels();
+          redraw();
+          return;
+        }
+      }
+    }
+
+    function moveHandle(handle, x, y) {
+      if (!loadedImage || mode !== 'custom') return;
+      const w = loadedImage.width;
+      const h = loadedImage.height;
+
+      if (handle.type === 'y') {
+        const i = handle.index;
+        const minY = yLines[i-1] + 8;
+        const maxY = yLines[i+1] - 8;
+        const iy = clamp(y / drawScale, minY, maxY);
+        yLines[i] = iy;
+        yLines = sortUnique(yLines);
+        // re-sync rows after sort may change order
+        ensureCustomGridInitialized();
+        updateCustomLabels();
+        redraw();
+        return;
+      }
+
+      if (handle.type === 'x') {
+        const r = handle.row;
+        const i = handle.index;
+        const xs = rowXLines[r];
+        const minX = xs[i-1] + 8;
+        const maxX = xs[i+1] - 8;
+        const ix = clamp(x / drawScale, minX, maxX);
+        xs[i] = ix;
+        rowXLines[r] = sortUnique(xs);
+        redraw();
+      }
+    }
+
+    // -----------------------
+    // Slicing
+    // -----------------------
+    function clearPreview() {
+      previewGrid.innerHTML = '';
+      previewGrid.hidden = true;
+      emptyState.hidden = false;
+      emptyState.textContent = t('emptyState');
+      piecesStat.textContent = '0';
+      downloadBtn.disabled = true;
+      slices = [];
+      sourceCtx.clearRect(0, 0, sourceCanvas.width, sourceCanvas.height);
+      sourceCanvas.width = 0;
+      sourceCanvas.height = 0;
     }
 
     function validateInputs() {
-      if (!loadedImage) {
-        setStatus('uploadFirstStatus', 'warn');
-        return false;
-      }
+      if (!loadedImage) { setStatus('uploadFirstStatus', 'warn'); return false; }
+      return true;
+    }
 
+    function sliceEven() {
       const cols = clampGridValue(columnsInput.value);
       const rows = clampGridValue(rowsInput.value);
       columnsInput.value = cols;
       rowsInput.value = rows;
-      updateGridStat();
-      return true;
-    }
 
-    function sliceImage() {
-      if (!validateInputs()) return;
-
-      const cols = clampGridValue(columnsInput.value);
-      const rows = clampGridValue(rowsInput.value);
       const tileWidth = loadedImage.width / cols;
       const tileHeight = loadedImage.height / rows;
       const baseName = getBaseName(loadedFileName);
@@ -881,8 +1113,6 @@
       const digits = String(total).length < 2 ? 2 : String(total).length;
 
       slices = [];
-      previewGrid.innerHTML = '';
-
       for (let row = 0; row < rows; row += 1) {
         for (let col = 0; col < cols; col += 1) {
           const sx = Math.round(col * tileWidth);
@@ -899,30 +1129,75 @@
           const dataUrl = canvas.toDataURL('image/png');
           const filename = `${baseName}_r${row + 1}_c${col + 1}_${padNumber(row * cols + col + 1, digits)}.png`;
 
-          slices.push({
-            row: row + 1,
-            col: col + 1,
-            width: sw,
-            height: sh,
-            filename,
-            dataUrl,
-            blob: dataURLToBlob(dataUrl),
-          });
+          slices.push({ row: row + 1, col: col + 1, width: sw, height: sh, filename, dataUrl, blob: dataURLToBlob(dataUrl) });
         }
       }
 
-      renderSlices();
-      drawSourcePreview();
       piecesStat.textContent = String(slices.length);
       downloadBtn.disabled = slices.length === 0;
-      setStatus('sliceDoneStatus', 'ok', { count: slices.length, cols, rows });
+      setStatus('sliceDoneEven', 'ok', { count: slices.length, cols, rows });
+      redraw();
+      renderSlices();
+    }
+
+    function sliceCustom() {
+      ensureCustomGridInitialized();
+      const baseName = getBaseName(loadedFileName);
+
+      const rowCount = yLines.length - 1;
+      const pieces = [];
+
+      // compute max cols for filename padding
+      let total = 0;
+      for (let r=0;r<rowCount;r++) total += Math.max(1, (rowXLines[r].length - 1));
+      const digits = String(total).length < 2 ? 2 : String(total).length;
+
+      let seq = 1;
+      for (let r=0;r<rowCount;r++) {
+        const y0 = Math.round(yLines[r]);
+        const y1 = Math.round(yLines[r+1]);
+        const sh = Math.max(1, y1 - y0);
+        const xs = rowXLines[r];
+        const colCount = xs.length - 1;
+
+        for (let c=0;c<colCount;c++) {
+          const x0 = Math.round(xs[c]);
+          const x1 = Math.round(xs[c+1]);
+          const sw = Math.max(1, x1 - x0);
+
+          const canvas = document.createElement('canvas');
+          canvas.width = sw;
+          canvas.height = sh;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(loadedImage, x0, y0, sw, sh, 0, 0, sw, sh);
+
+          const dataUrl = canvas.toDataURL('image/png');
+          const filename = `${baseName}_r${r + 1}_c${c + 1}_${padNumber(seq, digits)}.png`;
+          seq += 1;
+
+          pieces.push({ row: r + 1, col: c + 1, width: sw, height: sh, filename, dataUrl, blob: dataURLToBlob(dataUrl) });
+        }
+      }
+
+      slices = pieces;
+      piecesStat.textContent = String(slices.length);
+      downloadBtn.disabled = slices.length === 0;
+      setStatus('sliceDoneCustom', 'ok', { count: slices.length });
+      redraw();
+      renderSlices();
+    }
+
+    function sliceImage() {
+      if (!validateInputs()) return;
+      if (mode === 'even') sliceEven();
+      else sliceCustom();
     }
 
     function renderSlices() {
       if (!slices.length) {
         previewGrid.hidden = true;
         emptyState.hidden = false;
-        emptyState.innerHTML = t('emptyState');
+        emptyState.textContent = t('emptyState');
         return;
       }
 
@@ -938,6 +1213,9 @@
           <div class="tile-body">
             <div class="tile-name">${slice.filename}</div>
             <div class="tile-meta">${t('tileMeta', { row: slice.row, col: slice.col, width: slice.width, height: slice.height })}</div>
+            <div class="tile-actions">
+              <a class="tile-download" href="${slice.dataUrl}" download="${slice.filename}">${t('downloadSlice')}</a>
+            </div>
           </div>
         `;
         previewGrid.appendChild(tile);
@@ -945,15 +1223,8 @@
     }
 
     async function downloadZip() {
-      if (!slices.length) {
-        setStatus('noOutputStatus', 'warn');
-        return;
-      }
-
-      if (typeof JSZip === 'undefined') {
-        setStatus('zipUnavailableStatus', 'warn');
-        return;
-      }
+      if (!slices.length) { setStatus('noOutputStatus', 'warn'); return; }
+      if (typeof JSZip === 'undefined') { setStatus('zipUnavailableStatus', 'warn'); return; }
 
       downloadBtn.disabled = true;
       setStatus('zipPreparingStatus', 'info');
@@ -963,11 +1234,15 @@
         const folder = zip.folder(getBaseName(loadedFileName) + '_slices');
         slices.forEach((slice) => folder.file(slice.filename, slice.blob));
 
+        const gridSummary = mode === 'even'
+          ? `${clampGridValue(columnsInput.value)}x${clampGridValue(rowsInput.value)}`
+          : customGridSummary();
+
         const readme = [
           t('zipReadmeTitle'),
           '',
           t('zipReadmeSource', { filename: loadedFileName }),
-          t('zipReadmeGrid', { cols: clampGridValue(columnsInput.value), rows: clampGridValue(rowsInput.value) }),
+          t('zipReadmeGrid', { grid: gridSummary }),
           t('zipReadmePieces', { count: slices.length }),
           '',
           t('zipReadmeFooter')
@@ -978,21 +1253,24 @@
         const url = URL.createObjectURL(zipBlob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `${getBaseName(loadedFileName)}_${clampGridValue(columnsInput.value)}x${clampGridValue(rowsInput.value)}_slices.zip`;
+        link.download = `${getBaseName(loadedFileName)}_${gridSummary}_slices.zip`;
         document.body.appendChild(link);
         link.click();
         link.remove();
         URL.revokeObjectURL(url);
 
         setStatus('zipReadyStatus', 'ok');
-      } catch (error) {
-        console.error(error);
+      } catch (err) {
+        console.error(err);
         setStatus('zipFailedStatus', 'warn');
       } finally {
         downloadBtn.disabled = false;
       }
     }
 
+    // -----------------------
+    // File loading
+    // -----------------------
     function loadSelectedFile(file) {
       if (!file) return;
       if (!/^image\/(jpeg|png|gif)$/i.test(file.type) && !/\.(jpg|jpeg|png|gif)$/i.test(file.name)) {
@@ -1008,8 +1286,15 @@
         loadedFileName = file.name || 'image';
         imageSizeStat.textContent = `${img.width}×${img.height}`;
         clearPreview();
-        drawSourcePreview();
+
+        // initialize custom grid
+        yLines = [0, img.height];
+        rowXLines = [[0, img.width]];
+        selectedRow = 0;
+        dragging = null;
+
         setStatus('loadedFileStatus', 'info', { filename: loadedFileName });
+        redraw();
         URL.revokeObjectURL(objectUrl);
       };
       img.onerror = function () {
@@ -1019,45 +1304,224 @@
       img.src = objectUrl;
     }
 
-    filePickerBtn.addEventListener('click', () => {
-      fileInput.click();
-    });
-
+    // -----------------------
+    // Events
+    // -----------------------
+    filePickerBtn.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', (event) => {
       const file = event.target.files && event.target.files[0];
       loadSelectedFile(file);
     });
 
-    columnsInput.addEventListener('input', () => {
-      updateGridStat();
-      if (loadedImage) drawSourcePreview();
+    columnsInput.addEventListener('input', () => { if (mode === 'even') redraw(); });
+    rowsInput.addEventListener('input', () => { if (mode === 'even') redraw(); });
+
+    modeEvenBtn.addEventListener('click', () => setMode('even'));
+    modeCustomBtn.addEventListener('click', () => setMode('custom'));
+
+    addRowBtn.addEventListener('click', () => {
+      if (!loadedImage) { setStatus('uploadFirstStatus', 'warn'); return; }
+      ensureCustomGridInitialized();
+      if (yLines.length - 1 >= 10) return; // soft cap
+
+      // add a new horizontal line in the largest row
+      let bestIdx = 0;
+      let bestH = -1;
+      for (let i=0;i<yLines.length-1;i++) {
+        const h = yLines[i+1] - yLines[i];
+        if (h > bestH) { bestH = h; bestIdx = i; }
+      }
+      const mid = Math.round((yLines[bestIdx] + yLines[bestIdx+1]) / 2);
+      yLines.splice(bestIdx+1, 0, mid);
+      yLines = sortUnique(yLines);
+
+      // rebuild rowXLines for new rows: split the bestIdx row's xLines into two rows
+      const w = loadedImage.width;
+      const newRowX = [];
+      const rowCount = yLines.length - 1;
+      for (let r=0;r<rowCount;r++) newRowX[r] = [0, w];
+
+      // try to preserve previous rows; if row count increased by 1, duplicate the selected row's xLines
+      // best effort: copy existing rowXLines into the top rows until we run out
+      const old = rowXLines.slice();
+      const min = Math.min(old.length, newRowX.length);
+      for (let i=0;i<min;i++) newRowX[i] = sortUnique(old[i]);
+      // if we added a row within existing range, ensure both adjacent rows have some meaningful xLines
+      rowXLines = newRowX;
+      ensureCustomGridInitialized();
+      selectedRow = clamp(selectedRow, 0, rowXLines.length-1);
+      updateCustomLabels();
+      redraw();
     });
 
-    rowsInput.addEventListener('input', () => {
-      updateGridStat();
-      if (loadedImage) drawSourcePreview();
+    addColBtn.addEventListener('click', () => {
+      if (!loadedImage) { setStatus('uploadFirstStatus', 'warn'); return; }
+      ensureCustomGridInitialized();
+      const xs = rowXLines[selectedRow];
+      if (xs.length - 1 >= 12) return; // soft cap
+
+      // add a vertical line in the largest column segment of selected row
+      let bestIdx = 0;
+      let bestW = -1;
+      for (let i=0;i<xs.length-1;i++) {
+        const w = xs[i+1] - xs[i];
+        if (w > bestW) { bestW = w; bestIdx = i; }
+      }
+      const mid = Math.round((xs[bestIdx] + xs[bestIdx+1]) / 2);
+      xs.splice(bestIdx+1, 0, mid);
+      rowXLines[selectedRow] = sortUnique(xs);
+      redraw();
     });
 
-    langEnBtn.addEventListener('click', () => {
-      currentLanguage = 'en';
-      saveLanguagePreference(currentLanguage);
-      applyLanguage();
+    delRowBtn.addEventListener('click', () => {
+      if (!loadedImage) { setStatus('uploadFirstStatus', 'warn'); return; }
+      ensureCustomGridInitialized();
+      // Need at least 2 rows (i.e., 1 internal horizontal line) to delete
+      if (yLines.length <= 2) return;
+
+      // Delete the internal horizontal line nearest the vertical center of the selected row
+      const rowMid = (yLines[selectedRow] + yLines[selectedRow + 1]) / 2;
+      let bestIndex = -1;
+      let bestDist = Infinity;
+      for (let i = 1; i < yLines.length - 1; i += 1) {
+        const dist = Math.abs(yLines[i] - rowMid);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestIndex = i;
+        }
+      }
+
+      if (bestIndex === -1) return;
+      yLines.splice(bestIndex, 1);
+      yLines = sortUnique(yLines);
+
+      // Reinitialize rowXLines to match new row count (best effort preserve)
+      ensureCustomGridInitialized();
+      selectedRow = clamp(selectedRow, 0, yLines.length - 2);
+      updateCustomLabels();
+      redraw();
     });
 
-    langZhBtn.addEventListener('click', () => {
-      currentLanguage = 'zh-Hant';
-      saveLanguagePreference(currentLanguage);
-      applyLanguage();
+    delColBtn.addEventListener('click', () => {
+      if (!loadedImage) { setStatus('uploadFirstStatus', 'warn'); return; }
+      ensureCustomGridInitialized();
+      const xs = rowXLines[selectedRow];
+      // Need at least 2 cols (i.e., 1 internal vertical line) to delete
+      if (!xs || xs.length <= 2) return;
+
+      // Delete the internal vertical line nearest the horizontal center of the selected row
+      const rowMidX = (xs[0] + xs[xs.length - 1]) / 2;
+      let bestIndex = -1;
+      let bestDist = Infinity;
+      for (let i = 1; i < xs.length - 1; i += 1) {
+        const dist = Math.abs(xs[i] - rowMidX);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestIndex = i;
+        }
+      }
+
+      if (bestIndex === -1) return;
+      xs.splice(bestIndex, 1);
+      rowXLines[selectedRow] = sortUnique(xs);
+      redraw();
+    });
+
+    resetCustomBtn.addEventListener('click', () => {
+      if (!loadedImage) return;
+      resetCustomGrid();
     });
 
     sliceBtn.addEventListener('click', sliceImage);
     downloadBtn.addEventListener('click', downloadZip);
-    resetBtn.addEventListener('click', resetAll);
 
+    resetBtn.addEventListener('click', () => {
+      fileInput.value = '';
+      loadedImage = null;
+      loadedFileName = 'image';
+      imageSizeStat.textContent = '-';
+      updateGridStatText('-');
+      clearPreview();
+      setStatus('defaultStatus', 'info');
+    });
+
+    langEnBtn.addEventListener('click', () => { currentLanguage='en'; saveLanguagePreference(currentLanguage); applyLanguage(); });
+    langZhBtn.addEventListener('click', () => { currentLanguage='zh-Hant'; saveLanguagePreference(currentLanguage); applyLanguage(); });
+
+    // Canvas interactions for custom mode
+    canvasWrap.addEventListener('mousedown', (e) => {
+      if (mode !== 'custom' || !loadedImage) return;
+      const rect = sourceCanvas.getBoundingClientRect();
+      const x = (e.clientX - rect.left) * (sourceCanvas.width / rect.width);
+      const y = (e.clientY - rect.top) * (sourceCanvas.height / rect.height);
+
+      const handle = pickHandle(x, y);
+      if (handle) {
+        dragging = handle;
+        canvasWrap.style.cursor = handle.type === 'y' ? 'row-resize' : 'col-resize';
+        return;
+      }
+      selectRowByY(y);
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (mode !== 'custom' || !loadedImage) return;
+      const rect = sourceCanvas.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+      const x = (e.clientX - rect.left) * (sourceCanvas.width / rect.width);
+      const y = (e.clientY - rect.top) * (sourceCanvas.height / rect.height);
+
+      if (dragging) {
+        moveHandle(dragging, x, y);
+        return;
+      }
+
+      const hover = pickHandle(x, y);
+      if (hover) canvasWrap.style.cursor = hover.type === 'y' ? 'row-resize' : 'col-resize';
+      else canvasWrap.style.cursor = 'default';
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (!dragging) return;
+      dragging = null;
+      canvasWrap.style.cursor = 'default';
+    });
+
+    // Touch support
+    canvasWrap.addEventListener('touchstart', (e) => {
+      if (mode !== 'custom' || !loadedImage) return;
+      const t0 = e.touches[0];
+      const rect = sourceCanvas.getBoundingClientRect();
+      const x = (t0.clientX - rect.left) * (sourceCanvas.width / rect.width);
+      const y = (t0.clientY - rect.top) * (sourceCanvas.height / rect.height);
+      const handle = pickHandle(x, y);
+      if (handle) {
+        dragging = handle;
+      } else {
+        selectRowByY(y);
+      }
+      e.preventDefault();
+    }, { passive: false });
+
+    canvasWrap.addEventListener('touchmove', (e) => {
+      if (!dragging || !loadedImage) return;
+      const t0 = e.touches[0];
+      const rect = sourceCanvas.getBoundingClientRect();
+      const x = (t0.clientX - rect.left) * (sourceCanvas.width / rect.width);
+      const y = (t0.clientY - rect.top) * (sourceCanvas.height / rect.height);
+      moveHandle(dragging, x, y);
+      e.preventDefault();
+    }, { passive: false });
+
+    canvasWrap.addEventListener('touchend', () => {
+      dragging = null;
+    });
+
+    // init
     currentLanguage = getInitialLanguage();
-    updateGridStat();
-    resetAll();
     applyLanguage();
+    setMode('even');
+    setStatus('defaultStatus', 'info');
   </script>
 </body>
 </html>
